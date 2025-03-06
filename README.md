@@ -1,6 +1,8 @@
 # Closet-dex
 
-HI!<br>
-Hello!<br>
-Do we add the UML stuff to Jira?<br>
-How much do we need to have done at the end of the sprint? Does there need to be an interface?<br>
+Directory
+
+ClosetDex\                  - Top level handling navigation to different pages and landing page
+ClosetDex\Closet            - Includes all files for managing clothing items in closet. Viewing and adding 
+ClosetDex\Wardrobe          - Includes files for creating and saving outfits as well as viewing past ones
+

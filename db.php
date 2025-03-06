@@ -1,7 +1,7 @@
 <?php
 function connectDB()
 {
-$config = parse_ini_file("/local/my_web_files/lacole/db.ini");
+$config = parse_ini_file(__DIR__ . "/../../db.ini"); //Use __DIR__ for more reliable paths.
 $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 return $dbh;
@@ -392,3 +392,4 @@ function get_changed_password($username) {
 	}
 }
 ?>
+

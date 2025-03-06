@@ -8,9 +8,7 @@ session_start();
 
 <?php
 require "db.php";
-?>
 
-<?php
 if (!isset($_SESSION["username"])) {
 	header("LOCATION:login.php");
 } else {
@@ -18,9 +16,15 @@ if (!isset($_SESSION["username"])) {
 ?>
 
 <form action="login.php" method="post">
-<p align="right">
-<input type="submit" value="logout" name="logout">
-</p>
+	<p align="right">
+		<input type="submit" value="logout" name="logout">
+	</p>
+</form>
+
+<form action="Closet/closetHome.php" method = "post">
+	<p align="center">
+		<input type="submit" value="View Closet" name="closet">
+	</p>
 </form>
 
 <?php
