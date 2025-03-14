@@ -19,13 +19,13 @@ session_start();
 require "../db.php";
 
     $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
-    foreach ($categoryNames as $cNames) {
+    foreach ($categoryNames as $cName) {
          echo "<details>";
          echo "<summary>";
          echo $cName;
          echo "</summary>";  
        
-        $items = get_items($row['name']);
+        $items = get_items($cName);
 
 
         foreach ($items as $item) {
