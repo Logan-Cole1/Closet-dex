@@ -4,6 +4,10 @@ session_start();
 
 <html>
 
+<head>
+	<link rel="stylesheet" href="styles/style.css">
+</head>
+
 <p>Welcome to our the main page.</p>
 
 <?php

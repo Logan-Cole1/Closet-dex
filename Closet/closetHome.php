@@ -5,6 +5,7 @@ session_start();
 <html>
 <head>
     <title>Your Closet</title>
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
 

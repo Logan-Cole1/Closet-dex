@@ -5,6 +5,10 @@ session_start();
 
 <html>
 
+<head>
+	<link rel="stylesheet" href="styles/style.css">
+</head>
+
 <form action="login.php" method="post">
 	<label for="username">Username: </label>
 	<input type="text" name="username" placeholder="Your Name">
@@ -26,7 +30,7 @@ if (isset($_POST["login"])) {
 		header("LOCATION:main.php");
 		return;
 	} else {
-		echo '<p style="color:red">incorrect username and password</p>';
+		echo '<p style="color:red">Incorrect username or password</p>';
 	}
 }
 

@@ -1,0 +1,40 @@
+* {
+	font-family: serif;
+}
+
+/* Buttons */
+
+button, input[type=text], input[type=password], input[type=submit], input[type=dropdown], select {
+	padding: 5px 10px;
+	font-size: 12pt;
+	border: 2px solid black;	
+}
+
+button, input[type=submit], select {
+	background-color: #8ed1fa;
+}
+
+
+button:hover, input[type=submit]:hover, select:hover {
+	background-color: #c7eaff;
+	cursor: pointer;
+}
+
+button:active, input[type=submit]:active, select:active {
+	background-color: white;
+}
+
+/* Text/Select Inputs */
+
+input[type=text], input[type=password] {
+	background-color: #c7eaff;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+	background-color: white;
+	outline: none;
+}
+
+select:focus {
+	outline: none;
+}
