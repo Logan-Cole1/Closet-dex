@@ -22,7 +22,7 @@ require "../db.php";
     $categories = categorize_clothes();
 
 
-    $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories")
+    $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
     foreach ($categoryNames as $cNames) {
          echo "<details>";
          echo "<summary>";
