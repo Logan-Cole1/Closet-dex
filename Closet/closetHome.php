@@ -53,9 +53,6 @@ if (!isset($_SESSION["username"])) {
 </form>
 
 
-<p>Closet items</p>
-
-
 <?php
 $dbh = connectDB();
 
