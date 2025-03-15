@@ -28,6 +28,35 @@ function authenticate_customer($user, $passwd) {
 }
 
 
+function findClothingImage($itemName): ?string
+{
+    // Supported image extensions
+    $allowedExtensions = [
+        'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'heic', 'tiff', 'svg', 'ico', 
+        'jfif', 'pjpeg', 'pjp'
+    ];
+
+    // Define the directory to search (relative to current file)
+
+    // Iterate through supported extensions to find the first matching file
+    foreach ($allowedExtensions as $extension) {
+        $filePath = __DIR__. '/ClothingImages/' . $itemName . '.' . $extension;
+        // echo $filePath;
+
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            return $itemName.'.'.$extension; // Return the full path of the matching file
+        }
+    }
+
+    return null; // No matching file found
+}
+
+
+
+
+
+
 function authenticate_employee($user, $passwd) {
     try {
         $dbh = connectDB();

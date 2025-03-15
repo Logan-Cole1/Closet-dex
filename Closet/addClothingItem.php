@@ -26,16 +26,15 @@ if (isset($_POST["addItem"])) {
 
     $dbh->beginTransaction();
 
-    $statement = $dbh->prepare("SELECT clo_insert_clothing(:username, :itemName, :category) AS id");
+    $statement = $dbh->prepare("call clo_insert_clothing(:username, :itemName, :category)");
     $statement->bindParam(':username', $_SESSION["username"]);
     $statement->bindParam(':itemName', $itemName);
     $statement->bindParam(':category', $category);
     $result = $statement->execute();
 
     if ($result) {
-        $insertedId = $statement->fetch(PDO::FETCH_ASSOC)['id']; // Retrieve the inserted ID
         $fileExtension = pathinfo($_FILES["item"]["name"], PATHINFO_EXTENSION);
-        $newFilePath = "../ClothingImages/$insertedId.$fileExtension";
+        $newFilePath = "../ClothingImages/".$_SESSION["username"] . "_" . $itemName . "." . $fileExtension;
 
         if (move_uploaded_file($_FILES["item"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
             $dbh->commit();
@@ -68,7 +67,7 @@ if (isset($_POST["addItem"])) {
         <option value="dress">Dress</option>
         <option value="bottom">Bottom</option>
         <option value="footwear">Footwear</option>
-        <option value="accessory">Accessory</option>
+        <option value="accessories">Accessory</option>
     </select>
     <input type="submit" value="Add Item" name="addItem">
     <br>

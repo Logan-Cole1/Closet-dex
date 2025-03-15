@@ -11,9 +11,8 @@ create table clo_user(
 );
 
 create table clo_clothing_items(
-	 username varchar(30),
+	username varchar(30),
     cName varchar(50),
-    image varchar(500),
     category enum("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories") NOT NULL,
     foreign key (username) references clo_user(username),
     primary key (username, cName)
@@ -40,3 +39,5 @@ describe clo_user;
 describe clo_clothing_items;
 describe clo_outfits;
 describe clo_outfit_items;
+
+select * from clo_clothing_items;

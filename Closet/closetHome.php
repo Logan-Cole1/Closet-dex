@@ -29,7 +29,8 @@ require "../db.php";
 
 
         foreach ($items as $item) {
-            echo "<img src='../ClothingImages/" .$item["image"] . ".jpg' alt='" . htmlspecialchars($item["cName"]) . "' style='width:100px;height:100px;'>";
+            $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findClothingImage($item["username"] . "_" . $item["cName"]));
+            echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
             echo "<br>";
             echo "<p>" . htmlspecialchars($item["cName"]) . "</p>";
             echo "<br>";

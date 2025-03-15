@@ -20,17 +20,15 @@ END//
 
 #2 Procedure clo_insert_clothing(): create a new clothing
 
-drop function if exists clo_insert_clothing//
+drop procedure if exists clo_insert_clothing//
 
-CREATE function clo_insert_clothing (
+CREATE procedure clo_insert_clothing (
 	username varchar(30),
-   cName varchar(50),
-   category enum("Headwear", "Top", "Outerwear", "Bottom", "Dress", "Footwear", "Accessories")
+	cName varchar(50),
+	category enum("Headwear", "Top", "Outerwear", "Bottom", "Dress", "Footwear", "Accessories")
 )
-returns int
 begin
     INSERT INTO clo_clothing_items (username, cName, category) VALUES (username, cName, category);
-    return last_insert_id();
 END//
 
 
