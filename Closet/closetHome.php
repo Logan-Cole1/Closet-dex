@@ -45,7 +45,7 @@ require "../db.php";
    
    
 if (!isset($_SESSION["username"])) {
-    header("LOCATION:../login.php");
+    header("LOCATION:../index.php");
     exit; // Important: Stop further execution after redirect
 }
 ?>
@@ -57,18 +57,9 @@ if (!isset($_SESSION["username"])) {
     </p>
 </form>
 
-
-<?php
-$dbh = connectDB();
-
-
-$stmt = $dbh->prepare("SELECT * FROM clo_clothing_items WHERE username = :username");
-$stmt->bindParam(':username', $_SESSION["username"]);
-$stmt->execute();
-$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-?>
+<form action="../index.php" method="post">
+    <input type="submit" value="logout" name="logout">
+</form>
 
 
 </body>

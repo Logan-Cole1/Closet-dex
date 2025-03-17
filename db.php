@@ -139,20 +139,16 @@ function register_user($username, $password, $firstname, $lastname, $email, $add
     try {
         $dbh = connectDB();
         // check if username already exists in db
-        $check = $dbh->prepare("SELECT COUNT(username) FROM customer where username = :username");
+        $check = $dbh->prepare("SELECT COUNT(username) FROM clo_user where username = :username");
         $check->bindParam(":username", $username);
         $check->execute();
         $row=$check->fetch();
         if ($row[0] != 0) {
             return false;
         }
-        $statement = $dbh->prepare("INSERT INTO customer (username, password, first_name, last_name, email, shipping_address) values (:username, sha2(:password, 256), :firstname, :lastname, :email, :address)");
+        $statement = $dbh->prepare("INSERT INTO clo_user (username, password) values (:username, sha2(:password, 256))");
         $statement->bindParam(":username", $username);
         $statement->bindParam(":password", $password);
-        $statement->bindParam(":firstname", $firstname);
-        $statement->bindParam(":lastname", $lastname);
-        $statement->bindParam(":email", $email);
-        $statement->bindParam(":address", $address);
         $statement->execute();
         $dbh=null;
         return true;
