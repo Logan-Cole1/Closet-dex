@@ -37,7 +37,7 @@ require "../db.php";
         }
 
         if ($items == NULL) {
-        echo "<p> No items in closet </p>";
+        echo "<p> No items in this category!</p>";
         }
         
         echo "</details>";
