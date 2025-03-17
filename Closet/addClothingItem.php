@@ -16,7 +16,7 @@ require "../db.php";
 $returnMsg = "";
 
 if (!isset($_SESSION["username"])) {
-    header("LOCATION:../login.php");
+    header("LOCATION:../index.php");
 }
 
 if (isset($_POST["addItem"])) {
