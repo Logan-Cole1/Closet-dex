@@ -21,7 +21,7 @@ if (isset($_POST["register"])) {
 	if( $check == false ) {
 		echo '<p style="color:red">Username ' . $_POST['username'] . ' already exists. Try again.</p>';
 	} else {
-		header("LOCATION:login.php");
+		header("LOCATION:index.php");
 	}
 }
 
