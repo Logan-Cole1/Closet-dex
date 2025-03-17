@@ -27,7 +27,6 @@ require "../db.php";
        
         $items = get_items($cName);
 
-
         foreach ($items as $item) {
             $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findClothingImage($item["username"] . "_" . $item["cName"]));
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
@@ -36,6 +35,11 @@ require "../db.php";
             echo "<br>";
             echo "<p>" . htmlspecialchars($item["category"]) . "</p>";
         }
+
+        if ($items == NULL) {
+        echo "<p> No items in closet </p>";
+        }
+        
         echo "</details>";
     }
    
