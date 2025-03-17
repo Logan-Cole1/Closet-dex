@@ -17,16 +17,20 @@ session_start();
 <?php
    
 require "../db.php";
-
+    
+    //Category names cannot be changed
     $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
+    
+    //For the outer loop, go through each category and display the drop down for it
     foreach ($categoryNames as $cName) {
          echo "<details>";
          echo "<summary>";
          echo $cName;
          echo "</summary>";  
        
-        $items = get_items($cName);
+        $items = get_items($cName); //Call items function to get the items in the category
 
+        //For each item inside the category, display to screen with its description
         foreach ($items as $item) {
             $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findClothingImage($item["username"] . "_" . $item["cName"]));
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
@@ -36,6 +40,7 @@ require "../db.php";
             echo "<p>" . htmlspecialchars($item["category"]) . "</p>";
         }
 
+        //If There are no items in the category, show message
         if ($items == NULL) {
         echo "<p> No items in this category!</p>";
         }
