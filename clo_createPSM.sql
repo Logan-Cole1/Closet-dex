@@ -51,9 +51,9 @@ END//
 drop procedure if exists clo_insert_outfit_item//
 
 CREATE PROCEDURE clo_insert_outfit_item (
-	username varchar(30),
-   oName varchar(100),
-   cName varchar(50)
+    username varchar(30),
+    oName varchar(100),
+    cName varchar(50)
 )
 BEGIN
    insert into clo_outfit_items values (username, oName, cName);

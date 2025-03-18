@@ -19,17 +19,68 @@ if (!isset($_SESSION["username"])) {
     <br>
 
     <label for="outfitImage">Image:</label>
-    <input type="file" id="item" name="item" accept="image/*">
+    <input type="file" id="outfitImage" name="outfitImage" accept="image/*">
     <br>
 
-    
+    <label for="Headwear">Headwear:</label>
+    <input type="text" id="Headwear" name="Headwear">
+    <br>
+
+    <label for="Top">Top:</label>
+    <input type="text" id="Top" name="Top">
+    <br>
+
+    <label for="Outerwear">Outerwear:</label>
+    <input type="text" id="Outerwear" name="Outerwear">
+    <br>
+
+    <label for="Bottom">Bottom:</label>
+    <input type="text" id="Bottom" name="Bottom">
+    <br>
+
+    <label for="Footwear">Footwear:</label>
+    <input type="text" id="Footwear" name="Footwear">
+    <br>
+
+    <label for="Dress">Dress:</label>
+    <input type="text" id="Dress" name="Dress">
+    <br>
+
+    <label for="Accessory">Accessory:</label>
+    <input type="text" id="Accessory" name="Accessory">
+    <br>
 
 
     <input type="submit" value="Add Outfit" name="addOutfit">
     <br>
+</form>
 
+<?php
+require "../db.php";
 
+if (isset($_POST["addOutfit"])) {
+    $outfitName = $_POST["outfitName"];
+   
 
+    $Accessory = $_POST["Accessory"];
+
+    $categoryItems = array($_POST["Headwear"], 
+                           $_POST["Top"], 
+                           $_POST["Outerwear"],
+                           $_POST["Bottom"],
+                           $_POST["Footwear"], 
+                           $_POST["Dress"],
+                           $_POST["Accessory"]);
+    foreach ($categoryItems as $item) {
+        if ($item == "") {
+            continue;
+        } else {
+            addOutfitItem($outfitName, $item);
+        }
+    }
+}
+
+?>
 
 
 </html>
