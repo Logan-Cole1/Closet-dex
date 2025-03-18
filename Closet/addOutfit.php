@@ -3,6 +3,10 @@ session_start();
 ?>
 
 <html>
+<head>
+	<link rel="stylesheet" href="../styles/style.css">
+</head>
+
 <p>Create an outfit</p>
 
 
@@ -21,6 +25,8 @@ if (!isset($_SESSION["username"])) {
     <label for="outfitImage">Image:</label>
     <input type="file" id="item" name="item" accept="image/*">
     <br>
+
+    <label for="headwear">Headwear:</label>
 
     
 

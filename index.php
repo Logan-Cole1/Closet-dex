@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <html>
 <head>
     <link rel="stylesheet" href="newstyle.css">
@@ -39,7 +43,6 @@
 
 <?php
 // filepath: m:\my_web_files\classdb\Closet-dex\login.php
-session_start();
 require "db.php";
 
 if (isset($_POST["login"])) {
