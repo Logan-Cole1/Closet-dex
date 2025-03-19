@@ -60,9 +60,8 @@ require "../db.php";
 
 if (isset($_POST["addOutfit"])) {
     $outfitName = $_POST["outfitName"];
-   
 
-    $Accessory = $_POST["Accessory"];
+    
 
     $categoryItems = array($_POST["Headwear"], 
                            $_POST["Top"], 
@@ -71,13 +70,7 @@ if (isset($_POST["addOutfit"])) {
                            $_POST["Footwear"], 
                            $_POST["Dress"],
                            $_POST["Accessory"]);
-    foreach ($categoryItems as $item) {
-        if ($item == "") {
-            continue;
-        } else {
-            addOutfitItem($outfitName, $item);
-        }
-    }
+    createOutfit($outfitName, $categoryItems);
 }
 
 ?>

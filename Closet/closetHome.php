@@ -62,6 +62,7 @@ if (!isset($_SESSION["username"])) {
     </p>
 </form>
 
+
 <form action="../index.php" method="post">
     <input type="submit" value="logout" name="logout">
 </form>

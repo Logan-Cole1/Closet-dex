@@ -31,6 +31,11 @@ if (!isset($_SESSION["username"])) {
 	</p>
 </form>
 
+<form action="Outfits/outfitHome.php" method = "post">
+	<p align="center">
+		<input type="submit" value="View Outfits" name="outfits">
+	</p>
+
 <?php
 }
 ?>
