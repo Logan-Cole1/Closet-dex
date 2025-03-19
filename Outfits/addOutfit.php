@@ -61,16 +61,22 @@ require "../db.php";
 if (isset($_POST["addOutfit"])) {
     $outfitName = $_POST["outfitName"];
 
-    
+    createOutfit($_SESSION["username"], $outfitName);
 
-    $categoryItems = array($_POST["Headwear"], 
-                           $_POST["Top"], 
-                           $_POST["Outerwear"],
-                           $_POST["Bottom"],
-                           $_POST["Footwear"], 
-                           $_POST["Dress"],
-                           $_POST["Accessory"]);
-    createOutfit($outfitName, $categoryItems);
+    $categorys = array("Headwear", 
+                        "Top", 
+                        "Outerwear",
+                        "Bottom",
+                        "Footwear", 
+                        "Dress",
+                        "Accessory");
+    foreach ($categorys as $category) {
+        $item = $_POST[$category];
+        if ($item != "") {
+            addOutfitItem($_SESSION["username"], $outfitName, $category, $item);
+        }
+    }
+    
 }
 
 ?>
