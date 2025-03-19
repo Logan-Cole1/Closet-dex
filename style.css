@@ -2,9 +2,13 @@
 	font-family: monospace;
 }
 
+body {
+	background-color: #055748;
+}
+
 #center-box {
 	margin: 10vh auto;
-	/*background-color: red;*/
+	/* background-color: red; */
 	width: 50vw;
 	text-align: center;
 }

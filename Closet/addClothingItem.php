@@ -1,11 +1,11 @@
-'<?php
+<?php
 session_start();
 ?>
 
 <html>
 
 <head>
-	<link rel="stylesheet" href="../styles/style.css">
+	<link rel="stylesheet" href="../style.css">
 </head>
 
 <p>Input a item to add to your closet</p>
