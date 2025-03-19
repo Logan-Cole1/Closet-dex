@@ -14,12 +14,12 @@ session_start();
 require "db.php";
 
 if (!isset($_SESSION["username"])) {
-	header("LOCATION:login.php");
+	header("LOCATION:index.php");
 } else {
 	echo '<p align="right"> Welcome '. $_SESSION["username"].'</p>';
 ?>
 
-<form action="login.php" method="post">
+<form action="index.php" method="post">
 	<p align="right">
 		<input type="submit" value="logout" name="logout">
 	</p>

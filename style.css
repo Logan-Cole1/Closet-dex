@@ -1,40 +1,74 @@
 * {
-	font-family: serif;
+	font-family: monospace;
 }
 
-/* Buttons */
-
-button, input[type=text], input[type=password], input[type=submit], input[type=dropdown], select {
-	padding: 5px 10px;
-	font-size: 12pt;
-	border: 2px solid black;	
+#center-box {
+	margin: 10vh auto;
+	/*background-color: red;*/
+	width: 50vw;
+	text-align: center;
 }
 
-button, input[type=submit], select {
-	background-color: #8ed1fa;
+#login-page-logo {
+	width: 200px;
 }
 
+/* LOGIN BOX */
 
-button:hover, input[type=submit]:hover, select:hover {
-	background-color: #c7eaff;
+#login-box {
+	/*background-color: blue;*/
+	text-align: center;
+	width: 300px;
+	margin: 0 auto;
+	height: 170px;
+}
+
+#login-box * {
+	font-size: 14pt;
+}
+
+#login-box .textbox {
+	margin: 10px;
+	padding: 5px;
+	border: none;
+	border-bottom: 3px solid darkgray;
+	transition: border 0.5s;
+}
+
+#login-box .textbox::placeholder {
+	color: #696969;
+}
+
+#login-box .textbox:hover {
+	border-bottom-color: black;
+}
+
+#login-box .textbox:focus {
+	outline: none;
+	border-bottom-color: #61c8ff;
+}
+
+#login-box .textbox:focus::placeholder {
+	color: white;
+}
+
+#login-box .button {
+	margin: 20px 10px;
+	color: #696969;
+	border: 3px solid darkgray;
+	border-radius: 20px;
+	padding: 5px 12px;
+	background-color: white;
+	transition: color 0.5s, border-color 0.5s;
+}
+
+#login-box .button:hover {
 	cursor: pointer;
+	color: black;
+	border-color: black;
 }
 
-button:active, input[type=submit]:active, select:active {
-	background-color: white;
-}
-
-/* Text/Select Inputs */
-
-input[type=text], input[type=password] {
-	background-color: #c7eaff;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-	background-color: white;
-	outline: none;
-}
-
-select:focus {
-	outline: none;
+#login-box .button:active {
+	border-color: #61c8ff;
+	transition: none;
 }
