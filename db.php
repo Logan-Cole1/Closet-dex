@@ -166,14 +166,21 @@ function make_order($username) {
 /**
  * Summary of addOutfit
  * Create an empty outfit
- * UNFINISHED
  * @param mixed $username
  * @param mixed $oName
- * @param mixed $cName
  * @return void
  */
-function addOutfit($username, $oName, $cName) {
-
+function createOutfit($username, $oName) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("INSERT INTO clo_outfits (username, outfitName) values (:username, :oName)");
+        $statement->bindParam(":username", $username);
+        $statement->bindParam(":oName", $oName);
+        $statement->execute();
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
 }
 
 /**
