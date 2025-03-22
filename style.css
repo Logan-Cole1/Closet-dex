@@ -2,19 +2,45 @@
 	font-family: monospace;
 }
 
-body {
-	background-color: #055748;
+h1 {
+	font-size: 40px;
 }
 
 #center-box {
 	margin: 10vh auto;
-	/* background-color: red; */
+	/*background-color: red;*/
 	width: 50vw;
 	text-align: center;
 }
 
 #login-page-logo {
 	width: 200px;
+}
+
+#logout {
+	position: fixed;
+	top: 5px;
+	right: 5px;
+}
+
+#logout button {
+	color: #696969;
+	border: 3px solid darkgray;
+	border-radius: 15px;
+	padding: 3px 6px;
+	background-color: white;
+	transition: color 0.5s, border-color 0.5s;
+}
+
+#logout:hover button {
+	cursor: pointer;
+	color: black;
+	border-color: black;
+}
+
+#logout:active button {
+	border-color: #61c8ff;
+	transition: none;
 }
 
 /* LOGIN BOX */
