@@ -1,4 +1,4 @@
-'<?php
+<?php
 session_start();
 ?>
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION["username"])) {
 ?>
 
 
-<form action="addOutfit.php" method="post">
+<form action="addOutfit.php" method="post" enctype="multipart/form-data">
     <label for="outfitName">Outfit Name:</label>
     <input type="text" id="outfitName" name="outfitName">
     <br>
@@ -61,20 +61,25 @@ require "../db.php";
 if (isset($_POST["addOutfit"])) {
     $outfitName = $_POST["outfitName"];
 
-    createOutfit($_SESSION["username"], $outfitName);
-
-    $categorys = array("Headwear", 
-                        "Top", 
-                        "Outerwear",
-                        "Bottom",
-                        "Footwear", 
-                        "Dress",
-                        "Accessory");
-    foreach ($categorys as $category) {
-        $item = $_POST[$category];
-        if ($item != "") {
-            addOutfitItem($_SESSION["username"], $outfitName, $category, $item);
+    if(!createOutfit($_SESSION["username"], $outfitName)) {
+        echo "Error creating outfit";
+    } else{
+        $categorys = array("Headwear", 
+                            "Top", 
+                            "Outerwear",
+                            "Bottom",
+                            "Footwear", 
+                            "Dress",
+                            "Accessories");
+        foreach ($categorys as $category) {
+            $cName = $_POST[$category];
+            if ($item != "") {
+                if(!addOutfitItem($_SESSION["username"], $outfitName, $cName, $category)){
+                    echo "Error adding item " . $cName . " to outfit: Item of worng category.";
+                }
+            }
         }
+        echo "Outfit added successfully";
     }
     
 }

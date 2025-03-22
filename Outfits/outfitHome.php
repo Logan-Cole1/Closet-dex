@@ -1,18 +1,16 @@
 <html>
 
-<head>Welcome to our the outfits page! (>^w^<)</head>
+<?php
+if (!isset($_SESSION["username"])) {
+	header("LOACTION:../index.php");
+}
+?>
 
-
-
-
-<form action="addOutfit.php" method="post">
-
-</form>
-
+<head>Welcome to the outfits page! (>^w^<)</head>
 
 <form action="addOutfit.php" method="post">
     <p align="left">
-        <input type="submit" value="addOutfit" name="addOutfit">
+        <input type="submit" value="addOutfitPage" name="addOutfitPage">
     </p>
 </form>
 

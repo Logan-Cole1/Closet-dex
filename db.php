@@ -107,7 +107,7 @@ function register_user($username, $password, $firstname, $lastname, $email, $add
 }
 
 
-//Keeping this for now in case I want to refence transaction sytax later - Logan
+//Keeping this for now in case I want to refence transaction syntax later - Logan
 function make_order($username) {
     try {
         $dbh = connectDB();
@@ -168,15 +168,24 @@ function make_order($username) {
  * Create an empty outfit
  * @param mixed $username
  * @param mixed $oName
- * @return void
+ * @return bool
  */
 function createOutfit($username, $oName) {
     try {
+
+        // Move oImage to the correct directory
+        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
+        $newFilePath = "ClothingImages/" . "OUTFIT" . $_SESSION["username"] . "_" . $oName . "." . $fileExtension;
+        if (!move_uploaded_file($_FILES["item"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
+            return false;  
+        }
+
         $dbh = connectDB();
-        $statement = $dbh->prepare("INSERT INTO clo_outfits (username, outfitName) values (:username, :oName)");
+        $statement = $dbh->prepare("INSERT INTO clo_outfits (username, oName) values (:username, :oName)");
         $statement->bindParam(":username", $username);
         $statement->bindParam(":oName", $oName);
         $statement->execute();
+        return true;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";
         die();
@@ -190,17 +199,30 @@ function createOutfit($username, $oName) {
  * @param mixed $username
  * @param mixed $outfitName
  * @param mixed $item
- * @return void
+ * @return bool
  */
-function addOutfitItem($username, $outfitName, $item) {
+function addOutfitItem($username, $oName, $cName, $category) {
     try{
         $dbh = connectDB();
-        $statement = $dbh->prepare("INSERT INTO clo_outfit_items (username, outfitName, cName) values (:username, :outfitName, :cName)");
+
+        // check the item is of the correct category
+        $check = $dbh->prepare("SELECT category FROM clo_clothing_items WHERE username = :username AND cName = :cName");
+        $check->bindParam(":username", $username);
+        $check->bindParam("cName", $cName);
+        $check->execute();
+        $row = $check->fetch();
+        // if the item is not of the correct category, return false
+        if ($row[0] != $category) {
+            return false;
+        }
+
+        $statement = $dbh->prepare("INSERT INTO clo_outfit_items (username, oName, cName) values (:username, :oName, :cName)");
         $statement->bindParam(":username", $username);
-        $statement->bindParam(":outfitName", $outfitName);
-        $statement->bindParam(":cName", $item);
+        $statement->bindParam(":oName", $oName);
+        $statement->bindParam(":cName", $cName);
 
         $statement->execute();
+        return true;
 
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";

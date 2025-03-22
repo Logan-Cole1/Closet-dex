@@ -22,13 +22,13 @@ require "../db.php";
     $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
     
     //For the outer loop, go through each category and display the drop down for it
-    foreach ($categoryNames as $cName) {
+    foreach ($categoryNames as $catName) {
          echo "<details>";
          echo "<summary>";
-         echo $cName;
+         echo $catName;
          echo "</summary>";  
        
-        $items = get_items($cName); //Call items function to get the items in the category
+        $items = get_items($catName); //Call items function to get the items in the category
 
         //For each item inside the category, display to screen with its description
         foreach ($items as $item) {
