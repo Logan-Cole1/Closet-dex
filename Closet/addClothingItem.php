@@ -37,9 +37,15 @@ if (isset($_POST["addItem"])) {
         $newFilePath = "../ClothingImages/".$_SESSION["username"] . "_" . $itemName . "." . $fileExtension;
 
         if (move_uploaded_file($_FILES["item"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
-            $dbh->commit();
-            $returnMsg = "Item added successfully";
-            header("LOCATION:closetHome.php");
+            $dbhresult = $dbh->commit();
+            if ($dbhresult) {
+                $dbh=null;
+                $returnMsg = "Item added successfully";
+                header("LOCATION:closetHome.php");
+            } else {
+                $dbh->rollBack();
+                $returnMsg = "Error moving item"; //more accurate error message.
+            }
         } else {
             $dbh->rollBack();
             $returnMsg = "Error moving item"; //more accurate error message.

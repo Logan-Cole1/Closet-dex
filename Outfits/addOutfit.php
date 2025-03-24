@@ -64,6 +64,12 @@ if (isset($_POST["addOutfit"])) {
     if(!createOutfit($_SESSION["username"], $outfitName)) {
         echo "Error creating outfit";
     } else{
+        // Move oImage to the correct directory
+        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
+        $newFilePath = "../ClothingImages/" . "OUTFIT" ."_". $_SESSION["username"] . "_" . $_POST["outfitName"] . "." . $fileExtension;
+        if (!move_uploaded_file($_FILES["outfitImage"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
+            return false;  
+        }
         $categorys = array("Headwear", 
                             "Top", 
                             "Outerwear",
@@ -73,7 +79,7 @@ if (isset($_POST["addOutfit"])) {
                             "Accessories");
         foreach ($categorys as $category) {
             $cName = $_POST[$category];
-            if ($item != "") {
+            if ($cName != "") {
                 if(!addOutfitItem($_SESSION["username"], $outfitName, $cName, $category)){
                     echo "Error adding item " . $cName . " to outfit: Item of worng category.";
                 }

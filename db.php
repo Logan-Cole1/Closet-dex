@@ -26,8 +26,23 @@ function authenticate_customer($user, $passwd) {
     }
 }
 
+function get_clothing_item($cName, $username) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items ". "where cName = :cName and username = :username");
+        $statement->bindParam(":cName", $cName);
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        $dbh=null;
+        return $results;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
 
-function findClothingImage($itemName): ?string {
+function findImage($itemName): ?string {
     // Supported image extensions
     $allowedExtensions = [
         'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'heic', 'tiff', 'svg', 'ico', 
@@ -51,11 +66,12 @@ function findClothingImage($itemName): ?string {
 }
 
 
-function get_items($category) {
+function get_items_for_user($category, $username) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items ". "where category = :category");
+        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items ". "where category = :category and username = :username");
         $statement->bindParam(":category", $category);
+        $statement->bindParam(":username", $username);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         $dbh=null;
@@ -66,6 +82,36 @@ function get_items($category) {
     }
 }
 
+function get_outfits_for_user($username) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("SELECT * FROM clo_outfits ". "where username = :username");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $dbh=null;
+        return $results;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
+function get_outfit_items($outfitName, $username) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("SELECT * FROM clo_outfit_items ". "where oName = :outfitName and username = :username");
+        $statement->bindParam(":outfitName", $outfitName);
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $dbh=null;
+        return $results;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
 
 // not used yet
 function change_password($user, $password) {
@@ -173,12 +219,7 @@ function make_order($username) {
 function createOutfit($username, $oName) {
     try {
 
-        // Move oImage to the correct directory
-        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
-        $newFilePath = "ClothingImages/" . "OUTFIT" . $_SESSION["username"] . "_" . $oName . "." . $fileExtension;
-        if (!move_uploaded_file($_FILES["item"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
-            return false;  
-        }
+        
 
         $dbh = connectDB();
         $statement = $dbh->prepare("INSERT INTO clo_outfits (username, oName) values (:username, :oName)");

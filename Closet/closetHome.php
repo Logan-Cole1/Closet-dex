@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!isset($_SESSION["username"])) {
+    header("LOCATION:../index.php");
+    // exit; // Important: Stop further execution after redirect
+}
 ?>
 
 
@@ -28,11 +33,11 @@ require "../db.php";
          echo $catName;
          echo "</summary>";  
        
-        $items = get_items($catName); //Call items function to get the items in the category
+        $items = get_items_for_user($catName, $_SESSION["username"]); //Call items function to get the items in the category
 
         //For each item inside the category, display to screen with its description
         foreach ($items as $item) {
-            $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findClothingImage($item["username"] . "_" . $item["cName"]));
+            $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findImage($item["username"] . "_" . $item["cName"]));
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
             echo "<br>";
             echo "<p>" . htmlspecialchars($item["cName"]) . "</p>";
@@ -49,10 +54,7 @@ require "../db.php";
     }
    
    
-if (!isset($_SESSION["username"])) {
-    header("LOCATION:../index.php");
-    exit; // Important: Stop further execution after redirect
-}
+
 ?>
 
 

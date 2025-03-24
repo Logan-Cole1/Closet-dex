@@ -41,3 +41,5 @@ describe clo_outfits;
 describe clo_outfit_items;
 
 select * from clo_clothing_items;
+select * from clo_outfits;
+select * from clo_outfit_items
