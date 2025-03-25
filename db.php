@@ -129,7 +129,7 @@ function change_password($user, $password) {
 }
 
 
-function register_user($username, $password, $firstname, $lastname, $email, $address) {
+function register_user($username, $password) {
     try {
         $dbh = connectDB();
         // check if username already exists in db

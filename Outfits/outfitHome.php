@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"])) {
 
 <head>Welcome to the outfits page! (>^w^<)</head>
 
->
+
 
 
 <form action="addOutfit.php" method="post">

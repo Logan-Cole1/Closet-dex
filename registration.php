@@ -16,7 +16,7 @@
 require "db.php";
 
 if (isset($_POST["register"])) {
-	$check = register_user($_POST['username'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['address']);
+	$check = register_user($_POST['username'], $_POST['password']);
 
 	if( $check == false ) {
 		echo '<p style="color:red">Username ' . $_POST['username'] . ' already exists. Try again.</p>';
