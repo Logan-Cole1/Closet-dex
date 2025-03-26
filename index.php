@@ -4,6 +4,10 @@ require "db.php";
 
 session_start();
 
+if (isset($_POST["logout"])) {
+    session_destroy();
+}
+
 if (isset($_POST["login"])) {
 	if (authenticate_customer($_POST["username"], $_POST["password"]) == 1) {
 		$_SESSION["username"]=$_POST["username"];

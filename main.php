@@ -17,7 +17,7 @@ require "db.php";
 if (!isset($_SESSION["username"])) {
 	header("LOCATION:index.php");
 } else { 
-	echo '<div id="logout">'. $_SESSION["username"].' <a href="index.php"><button>Logout</button></div></a>';
+	echo '<div id="logout">'. $_SESSION["username"].' <form action="index.php" method="post"><input type="submit", value="Logout" name="logout"></div></form>';
 ?>
 	<div id="center-box">
 		<h1>Welcome!</h1>
