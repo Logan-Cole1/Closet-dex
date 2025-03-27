@@ -23,7 +23,13 @@ h1 {
 	right: 5px;
 }
 
-#logout button {
+button {
+	all: unset; /* Reset all default styles */
+}
+
+#logout form .button {
+	/* Ensure styles are applied correctly */
+	display: inline-block;
 	color: #696969;
 	border: 3px solid darkgray;
 	border-radius: 15px;
@@ -32,13 +38,13 @@ h1 {
 	transition: color 0.5s, border-color 0.5s;
 }
 
-#logout:hover button {
+#logout form .button:hover {
 	cursor: pointer;
 	color: black;
 	border-color: black;
 }
 
-#logout:active button {
+#logout form .button:active {
 	border-color: #61c8ff;
 	transition: none;
 }
