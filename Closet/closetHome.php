@@ -1,27 +1,29 @@
 <?php
-session_start();
+/* closetHome.php
+ * This file is the main page of the Closet section of the application. 
+ * It displays the user's closet, which is a collection of clothing items. 
+ * Users can view their items by category and add new items to their closet.
+ */
+require_once __DIR__ . "/../config.php";
+require_once __DIR__ . "/../db.php";
 
 if (!isset($_SESSION["username"])) {
     header("LOCATION:../index.php");
-    // exit; // Important: Stop further execution after redirect
+    exit; // Important: Stop further execution after redirect
 }
 ?>
 
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>Your Closet</title>
     <link rel="stylesheet" href="../styles/style.css">
 </head>
+
 <body>
+    <p>This is your closet</p>
 
-
-<p>This is your closet</p>
-
-
-<?php
-   
-require "../db.php";
+    <?php
     
     //Category names cannot be changed
     $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
@@ -52,24 +54,15 @@ require "../db.php";
         
         echo "</details>";
     }
-   
-   
+    ?>
+    <form action="addClothingItem.php" method="post">
+        <p align="left">
+            <input type="submit" value="additems" name="additems">
+        </p>
+    </form>
 
-?>
-
-
-<form action="addClothingItem.php" method="post">
-    <p align="left">
-        <input type="submit" value="additems" name="additems">
-    </p>
-</form>
-
-
-<form action="../index.php" method="post">
-    <input type="submit" value="logout" name="logout">
-</form>
-
-
+    <form action="../logout.php" method="post">
+        <input type="submit" value="logout" name="logout">
+    </form>
 </body>
 </html>
-

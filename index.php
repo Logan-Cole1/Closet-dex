@@ -1,18 +1,16 @@
-
 <?php
-require "db.php";
+/* index.php
+ * This file is the login page of the application.
+ */
+require_once __DIR__ . "/config.php";
+require_once __DIR__ . "/db.php";
 
-session_start();
-
-if (isset($_POST["logout"])) {
-    session_destroy();
-}
 
 if (isset($_POST["login"])) {
 	if (authenticate_customer($_POST["username"], $_POST["password"]) == 1) {
 		$_SESSION["username"]=$_POST["username"];
 		header("LOCATION:main.php");
-		return;
+		exit;
 	} else {
 		echo '<p style="color:red">Incorrect username or password</p>';
 	}
@@ -25,13 +23,11 @@ if (isset($_POST["register"])) {
 ?>
 
 
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
 </head>
-
-
-
 
 <body>
     <div id="center-box">

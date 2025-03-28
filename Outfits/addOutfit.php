@@ -1,17 +1,53 @@
 <?php
-session_start();
-?>
+/* addOutfit.php
+ * This file allows users to create an outfit. 
+ * Users can input an outfit name, upload an image, and add items to the outfit. 
+ * The outfit is then added to the database.
+ */
+require_once __DIR__ . "/../config.php";
+require_once __DIR__ . "/../db.php";
 
-<html>
-<p>Create an outfit</p>
-
-
-<?php
 if (!isset($_SESSION["username"])) {
 	header("LOACTION:../index.php");
+    exit;
+}
+
+if (isset($_POST["addOutfit"])) {
+    $outfitName = $_POST["outfitName"];
+
+    if(!createOutfit($_SESSION["username"], $outfitName)) {
+        echo "Error creating outfit";
+    } else{
+        // Move oImage to the correct directory
+        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
+        $newFilePath = "../ClothingImages/" . "OUTFIT" ."_". $_SESSION["username"] . "_" . $_POST["outfitName"] . "." . $fileExtension;
+        if (!move_uploaded_file($_FILES["outfitImage"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
+            return false;  
+        }
+        $categorys = array("Headwear", 
+                            "Top", 
+                            "Outerwear",
+                            "Bottom",
+                            "Footwear", 
+                            "Dress",
+                            "Accessories");
+        foreach ($categorys as $category) {
+            $cName = $_POST[$category];
+            if ($cName != "") {
+                if(!addOutfitItem($_SESSION["username"], $outfitName, $cName, $category)){
+                    echo "Error adding item " . $cName . " to outfit: Item of worng category.";
+                }
+            }
+        }
+        echo "Outfit added successfully";
+    }
+    
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<p>Create an outfit</p>
 
 <form action="addOutfit.php" method="post" enctype="multipart/form-data">
     <label for="outfitName">Outfit Name:</label>
@@ -54,43 +90,5 @@ if (!isset($_SESSION["username"])) {
     <input type="submit" value="Add Outfit" name="addOutfit">
     <br>
 </form>
-
-<?php
-require "../db.php";
-
-if (isset($_POST["addOutfit"])) {
-    $outfitName = $_POST["outfitName"];
-
-    if(!createOutfit($_SESSION["username"], $outfitName)) {
-        echo "Error creating outfit";
-    } else{
-        // Move oImage to the correct directory
-        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
-        $newFilePath = "../ClothingImages/" . "OUTFIT" ."_". $_SESSION["username"] . "_" . $_POST["outfitName"] . "." . $fileExtension;
-        if (!move_uploaded_file($_FILES["outfitImage"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
-            return false;  
-        }
-        $categorys = array("Headwear", 
-                            "Top", 
-                            "Outerwear",
-                            "Bottom",
-                            "Footwear", 
-                            "Dress",
-                            "Accessories");
-        foreach ($categorys as $category) {
-            $cName = $_POST[$category];
-            if ($cName != "") {
-                if(!addOutfitItem($_SESSION["username"], $outfitName, $cName, $category)){
-                    echo "Error adding item " . $cName . " to outfit: Item of worng category.";
-                }
-            }
-        }
-        echo "Outfit added successfully";
-    }
-    
-}
-
-?>
-
 
 </html>
