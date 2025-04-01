@@ -1,11 +1,11 @@
 <?php
 function connectDB() {
-$config = parse_ini_file(__DIR__ . "/../../db.ini"); //Use __DIR__ for more reliable paths.
-$dbh = new PDO($config['dsn'], $config['username'], $config['password']);
-$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$statement = $dbh->prepare("use cfleser");
-$statement->execute();
-return $dbh;
+    $config = parse_ini_file(__DIR__ . "/../../db.ini"); //Use __DIR__ for more reliable paths.
+    $dbh = new PDO($config['dsn'], $config['username'], $config['password']);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $statement = $dbh->prepare("use cfleser");
+    $statement->execute();
+    return $dbh;
 }
 
 
@@ -138,6 +138,7 @@ function register_user($username, $password) {
         $check->execute();
         $row=$check->fetch();
         if ($row[0] != 0) {
+            $dbh = null;
             return false;
         }
         $statement = $dbh->prepare("INSERT INTO clo_user (username, password) values (:username, sha2(:password, 256))");
@@ -152,6 +153,29 @@ function register_user($username, $password) {
     }
 }
 
+function create_category($username, $category){
+    try {
+        $dbh = connectDB();
+        $check = $dbh->prepare("SELECT COUNT(category) FROM clo_outfit_categories where username = :username and category = :category");
+        $check->bindParam(":username", $username);
+        $check->bindParam(":category", $category);
+        $check->execute();
+        $row = $check->fetch();
+        if ($row[0] != 0) {
+            $dbh = null;
+            return false;
+        }
+
+        $statement = $dbh->prepare("INSERT INTO clo_outfit_categories(username, category) values (:username, :category)");
+        $statement->bindParam(":username", $username);
+        $statement->bindParam(":category", $category);
+        $dbh = null;
+        return true;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
 
 //Keeping this for now in case I want to refence transaction syntax later - Logan
 function make_order($username) {
@@ -218,14 +242,12 @@ function make_order($username) {
  */
 function createOutfit($username, $oName) {
     try {
-
-        
-
         $dbh = connectDB();
         $statement = $dbh->prepare("INSERT INTO clo_outfits (username, oName) values (:username, :oName)");
         $statement->bindParam(":username", $username);
         $statement->bindParam(":oName", $oName);
         $statement->execute();
+        $dbh = null;
         return true;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";
@@ -254,6 +276,7 @@ function addOutfitItem($username, $oName, $cName, $category) {
         $row = $check->fetch();
         // if the item is not of the correct category, return false
         if ($row[0] != $category) {
+            $dbh = null;
             return false;
         }
 
@@ -263,6 +286,7 @@ function addOutfitItem($username, $oName, $cName, $category) {
         $statement->bindParam(":cName", $cName);
 
         $statement->execute();
+        $dbh = null;
         return true;
 
     } catch (PDOException $e) {

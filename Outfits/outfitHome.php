@@ -25,6 +25,38 @@ if (!isset($_SESSION["username"])) {
         </p>
     </form>
 
+    <?php
+    if (isset($_POST["categoryCreate"])) {
+    ?>
+        <form action="outfitHome.php" method="post">
+            <label for="categoryName">Category Name:</label>
+            <input type="text" id="categoryName" name="categoryName">
+            <br>
+            <input type="submit" value="Add Category" name="addCategory">
+        </form>
+    <?php
+    } else {
+    ?>
+        <form action='outfitHome.php' method='post'>
+            <input type='submit' value='Create Category' name='categoryCreate'>
+        </form>
+    <?php
+    }
+    if (isset($_POST["addCategory"])) {
+        $categoryName = $_POST["categoryName"];
+        if (empty($categoryName)) {
+            echo "<p style='color:red;'>Please enter a category name.</p>";
+        } else {
+            $result = create_category($_SESSION["username"], $categoryName);
+            if ($result) {
+                echo "<p style='color:green;'>Category created successfully!</p>";
+            } else {
+                echo "<p style='color:red;'>Failed to create category.</p>";
+            }
+        }
+    }
+    ?>
+
 
     <?php
 
