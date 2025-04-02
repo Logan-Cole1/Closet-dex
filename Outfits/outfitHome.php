@@ -87,6 +87,7 @@ if (!isset($_SESSION["username"])) {
             echo "<br>";
             echo "<p>" . htmlspecialchars($clothingItem["category"]) . "</p>";
         }
+        echo "</details>";
 
     }
     ?>
