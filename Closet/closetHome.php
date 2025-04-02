@@ -64,5 +64,8 @@ if (!isset($_SESSION["username"])) {
     <form action="../logout.php" method="post">
         <input type="submit" value="logout" name="logout">
     </form>
+	
+	<button onclick="history.go(-1);">Back</button>
+
 </body>
 </html>

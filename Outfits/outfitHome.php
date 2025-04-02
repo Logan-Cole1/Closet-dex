@@ -16,6 +16,8 @@ if (!isset($_SESSION["username"])) {
 <!DOCTYPE html>
 <html>
 <head>Welcome to the outfits page! (>^w^<)</head>
+</br>
+<button onclick="history.go(-1);">Back</button>
 
 <body>
 

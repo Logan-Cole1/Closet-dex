@@ -90,5 +90,6 @@ if (isset($_POST["addOutfit"])) {
     <input type="submit" value="Add Outfit" name="addOutfit">
     <br>
 </form>
+    <button onclick="history.go(-1);">Cancel</button>
 
 </html>
