@@ -169,8 +169,39 @@ function create_category($username, $category){
         $statement = $dbh->prepare("INSERT INTO clo_outfit_categories(username, category) values (:username, :category)");
         $statement->bindParam(":username", $username);
         $statement->bindParam(":category", $category);
+        $statement->execute();
         $dbh = null;
         return true;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
+function get_outfit_categories($username) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("SELECT category FROM clo_outfit_categories where username = :username");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $dbh=null;
+        return $results;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
+function addOutfitToCategory($username, $outfitName, $categoryName) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("UPDATE clo_outfits SET category = :category WHERE username = :username AND oName = :oName");
+        $statement->bindParam(":category", $categoryName);
+        $statement->bindParam(":username", $username);
+        $statement->bindParam(":oName", $outfitName);
+        $statement->execute();
+        $dbh=null;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";
         die();

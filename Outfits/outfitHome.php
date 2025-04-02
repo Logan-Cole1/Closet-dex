@@ -11,6 +11,11 @@ if (!isset($_SESSION["username"])) {
 	header("LOACTION:../index.php");
     exit;
 }
+
+if (isset($_POST["addToCategory"])){
+    addOutfitToCategory($_SESSION["username"], $_POST["outfitName"], $_POST["categoryName"]);
+    echo "<p style='color:green;'>Outfit added to category successfully!</p>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +81,25 @@ if (!isset($_SESSION["username"])) {
         $outfitImage = findImage("OUTFIT_".$outfit["username"] . "_" . $outfit["oName"]);
         $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . $outfitImage);
         echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($outfit["oName"]) . "' style='width:200px;height:200px;'>";
+        
+        // Form to add outfit to a category
+        ?>
+        <form action="outfitHome.php" method="post">
+            <input type="hidden" name="outfitName" value="<?php echo htmlspecialchars($outfit["oName"]); ?>">
+            <input type="hidden" name="username" value="<?php echo htmlspecialchars($_SESSION["username"]); ?>">
+            <select name="categoryName">
+                <?php
+                // Display the categories in the dropdown
+                $categoryNames = get_outfit_categories($_SESSION["username"]);
+                foreach ($categoryNames as $row) {
+                    $categoryName = $row["category"];
+                    echo "<option value='" . htmlentities($categoryName) . "'>" . htmlentities($categoryName) . "</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" name="addToCategory" value="Add to Category">
+        </form>
+        <?php
         echo "</summary>";
 
         foreach ($outfitItems as $outfitItem) {
