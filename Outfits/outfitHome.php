@@ -67,12 +67,17 @@ if (isset($_POST["addToCategory"])){
 
     <?php
 
-    $outfits = get_outfits_for_user($_SESSION["username"]); //Call outfits function
+    $outfits = get_outfits_for_user($_SESSION["username"]); // Call outfits function
     $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
 
+    // Reorder outfits based on $categoryNames
+    usort($outfits, function($a, $b) use ($categoryNames) {
+        $posA = array_search($a['category'], $categoryNames);
+        $posB = array_search($b['category'], $categoryNames);
+        return $posA - $posB;
+    });
 
     foreach($outfits as $outfit) {
-
         $outfitItems = get_outfit_items($outfit["oName"], $_SESSION["username"]);
 
         echo "<details>";
@@ -81,7 +86,7 @@ if (isset($_POST["addToCategory"])){
         $outfitImage = findImage("OUTFIT_".$outfit["username"] . "_" . $outfit["oName"]);
         $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . $outfitImage);
         echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($outfit["oName"]) . "' style='width:200px;height:200px;'>";
-        
+
         // Form to add outfit to a category
         ?>
         <form action="outfitHome.php" method="post">

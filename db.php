@@ -13,7 +13,7 @@ function connectDB() {
 function authenticate_customer($user, $passwd) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT count(*) FROM clo_user ". "where username = :username and password = sha2(:passwd,256) ");
+        $statement = $dbh->prepare("SELECT count(*) FROM clo_user where username = :username and password = sha2(:passwd,256) ");
         $statement->bindParam(":username", $user);
         $statement->bindParam(":passwd", $passwd);
         $result = $statement->execute();
@@ -29,7 +29,7 @@ function authenticate_customer($user, $passwd) {
 function get_clothing_item($cName, $username) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items ". "where cName = :cName and username = :username");
+        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items where cName = :cName and username = :username");
         $statement->bindParam(":cName", $cName);
         $statement->bindParam(":username", $username);
         $statement->execute();
@@ -69,7 +69,7 @@ function findImage($itemName): ?string {
 function get_items_for_user($category, $username) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items ". "where category = :category and username = :username");
+        $statement = $dbh->prepare("SELECT * FROM clo_clothing_items where category = :category and username = :username");
         $statement->bindParam(":category", $category);
         $statement->bindParam(":username", $username);
         $statement->execute();
@@ -85,11 +85,15 @@ function get_items_for_user($category, $username) {
 function get_outfits_for_user($username) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT * FROM clo_outfits ". "where username = :username");
+        $statement = $dbh->prepare("
+            SELECT * 
+            FROM clo_outfits 
+            WHERE username = :username
+        ");
         $statement->bindParam(":username", $username);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $dbh=null;
+        $dbh = null;
         return $results;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";
@@ -100,12 +104,28 @@ function get_outfits_for_user($username) {
 function get_outfit_items($outfitName, $username) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("SELECT * FROM clo_outfit_items ". "where oName = :outfitName and username = :username");
+        
+        $statement = $dbh->prepare("SELECT clo_outfit_items.* 
+            FROM clo_outfit_items
+            JOIN clo_clothing_items ON clo_outfit_items.cName = clo_clothing_items.cName
+            WHERE clo_outfit_items.oName = :outfitName 
+            AND clo_outfit_items.username = :username
+            ORDER BY 
+                CASE clo_clothing_items.category
+                    WHEN 'Headwear' THEN 1
+                    WHEN 'Top' THEN 2
+                    WHEN 'Outerwear' THEN 3
+                    WHEN 'Bottom' THEN 4
+                    WHEN 'Footwear' THEN 5
+                    WHEN 'Dress' THEN 6
+                    WHEN 'Accessories' THEN 7
+                    ELSE 8 -- Categories not listed above will appear last
+                END");
         $statement->bindParam(":outfitName", $outfitName);
         $statement->bindParam(":username", $username);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $dbh=null;
+        $dbh = null;
         return $results;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";
