@@ -140,6 +140,7 @@ if (isset($_POST["addToCategory"])){
             echo "</details><br><br><br>";
 
         }
+        echo "</details>";
     }
     ?>
 </div>
