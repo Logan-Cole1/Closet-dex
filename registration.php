@@ -5,6 +5,8 @@
  * If the user already exists, an error message is displayed.
  */
 
+ require_once __DIR__ . "/db.php";
+
 if (isset($_POST["register"])) {
 	$check = register_user($_POST['username'], $_POST['password']);
 
