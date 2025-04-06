@@ -125,18 +125,15 @@ function get_items_for_user($category, $username) {
     }
 }
 
-function get_outfits_for_user($username) {
+function get_outfits_for_user($username, $category) {
     try {
         $dbh = connectDB();
-        $statement = $dbh->prepare("
-            SELECT * 
-            FROM clo_outfits 
-            WHERE username = :username
-        ");
+        $statement = $dbh->prepare("SELECT * FROM clo_outfits where username = :username and category = :category");
         $statement->bindParam(":username", $username);
+        $statement->bindParam(":category", $category);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        $dbh = null;
+        $dbh=null;
         return $results;
     } catch (PDOException $e) {
         print "Error!" . $e->getMessage() . "<br/>";

@@ -79,58 +79,67 @@ if (isset($_POST["addToCategory"])){
 
 
     <?php
+    $oCategories = get_outfit_categories($_SESSION["username"]);
 
-    $outfits = get_outfits_for_user($_SESSION["username"]); // Call outfits function
-    $categoryNames = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
+    foreach ($oCategories as $row) {
 
-    // Reorder outfits based on $categoryNames
-    usort($outfits, function($a, $b) use ($categoryNames) {
-        $posA = array_search($a['category'], $categoryNames);
-        $posB = array_search($b['category'], $categoryNames);
-        return $posA - $posB;
-    });
-
-    foreach($outfits as $outfit) {
-        $outfitItems = get_outfit_items($outfit["oName"], $_SESSION["username"]);
-
-        $outfitImage = findImage("OUTFIT_".$outfit["username"] . "_" . $outfit["oName"]);
-        $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . $outfitImage);
-        echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($outfit["oName"]) . "' style='width:200px;height:200px;'>";
-
-        // Form to add outfit to a category
-        ?>
-        <form action="outfitHome.php" method="post">
-            <input type="hidden" name="outfitName" value="<?php echo htmlspecialchars($outfit["oName"]); ?>">
-            <input type="hidden" name="username" value="<?php echo htmlspecialchars($_SESSION["username"]); ?>">
-            <select name="categoryName">
-                <?php
-                // Display the categories in the dropdown
-                $categoryNames = get_outfit_categories($_SESSION["username"]);
-                foreach ($categoryNames as $row) {
-                    $categoryName = $row["category"];
-                    echo "<option value='" . htmlentities($categoryName) . "'>" . htmlentities($categoryName) . "</option>";
-                }
-                ?>
-            </select>
-            <input type="submit" name="addToCategory" value="Add to Category">
-        </form>
-        <?php
         echo "<details>";
         echo "<summary>";
-        echo $outfit["oName"];
+        echo $row["category"];
         echo "</summary>";
-	echo "<div class='item-list'>";
 
-        foreach ($outfitItems as $outfitItem) {
-            $clothingItem = get_clothing_item($outfitItem["cName"], $outfitItem["username"]);
-            $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findImage($outfitItem["username"] . "_" . $outfitItem["cName"]));
-            echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($clothingItem["cName"]) . "' style='width:200px;height:200px;'>";
-            echo "<br>";
-            echo htmlspecialchars($clothingItem["cName"]) . " (" . htmlspecialchars($clothingItem["category"]) . ")<br><br>";
+        $outfits = get_outfits_for_user($_SESSION["username"], $row["category"]); // Call outfits function
+        $categoryNames = ["Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories"];
+
+        // Reorder outfits based on $categoryNames
+        usort($outfits, function($a, $b) use ($categoryNames) {
+            $posA = array_search($a['category'], $categoryNames);
+            $posB = array_search($b['category'], $categoryNames);
+            return $posA - $posB;
+        });
+
+        foreach($outfits as $outfit) {
+            $outfitItems = get_outfit_items($outfit["oName"], $_SESSION["username"]);
+
+            $outfitImage = findImage("OUTFIT_".$outfit["username"] . "_" . $outfit["oName"]);
+            $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . $outfitImage);
+            echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($outfit["oName"]) . "' style='width:200px;height:200px;'>";
+
+            // Form to add outfit to a category
+            ?>
+            <form action="outfitHome.php" method="post">
+                <input type="hidden" name="outfitName" value="<?php echo htmlspecialchars($outfit["oName"]); ?>">
+                <input type="hidden" name="username" value="<?php echo htmlspecialchars($_SESSION["username"]); ?>">
+                <select name="categoryName">
+                    <?php
+                    // Display the categories in the dropdown
+                    $categoryNames = get_outfit_categories($_SESSION["username"]);
+                    foreach ($categoryNames as $row) {
+                        $categoryName = $row["category"];
+                        echo "<option value='" . htmlentities($categoryName) . "'>" . htmlentities($categoryName) . "</option>";
+                    }
+                    ?>
+                </select>
+                <input type="submit" name="addToCategory" value="Add to Category">
+            </form>
+            <?php
+            echo "<details>";
+            echo "<summary>";
+            echo $outfit["oName"];
+            echo "</summary>";
+        echo "<div class='item-list'>";
+
+            foreach ($outfitItems as $outfitItem) {
+                $clothingItem = get_clothing_item($outfitItem["cName"], $outfitItem["username"]);
+                $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findImage($outfitItem["username"] . "_" . $outfitItem["cName"]));
+                echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($clothingItem["cName"]) . "' style='width:200px;height:200px;'>";
+                echo "<br>";
+                echo htmlspecialchars($clothingItem["cName"]) . " (" . htmlspecialchars($clothingItem["category"]) . ")<br><br>";
+            }
+        echo "</div>";
+            echo "</details><br><br><br>";
+
         }
-	echo "</div>";
-        echo "</details><br><br><br>";
-
     }
     ?>
 </div>
