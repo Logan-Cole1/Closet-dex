@@ -26,6 +26,7 @@ if (isset($_POST["register"])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Closet-Dex | Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -34,8 +35,8 @@ if (isset($_POST["register"])) {
         <img id="login-page-logo" src="logo.png">
         <div id="login-box">
             <form action="index.php" method="post">
-                <input class="textbox" type="text" name="username" placeholder="Your Name"><br>
-                <input class="textbox" type="password" name="password" placeholder="Your Password"><br>
+                <input class="textbox" type="text" name="username" placeholder="Username"><br>
+                <input class="textbox" type="password" name="password" placeholder="Password"><br>
                 <input class="button" type="submit" value="Login" name="login">
                 <input class="button" type="submit" value="Register" name="register">
             </form>

@@ -24,9 +24,9 @@ if (!isset($_SESSION["username"])) {
 
 	<div id="logout">
 		<?php echo htmlspecialchars($_SESSION["username"]); ?>
-		<form action="logout.php" method="post">
-			<button class="button" type="submit" name="logout">Logout</button>
-		</form>
+		<a href="logout.php">
+			<button class="small-button">Logout</button>
+		</a>
 	</div>
 
 	

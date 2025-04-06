@@ -26,14 +26,26 @@ if (isset($_POST["cancel"])) {
 <!DOCTYPE html>
 <html>
 
+<head>
+	<link rel="stylesheet" href="style.css"></link>
+	<title>Closet-Dex | Register Account</title>
+</head>
+
+<body>
+
+
+<div id="center-box">
+<img id="login-page-logo" src="logo.png">
+<div id="login-box">
+
 <form action="registration.php" method="post">
-	<label for="username">Username:</label>
-	<input type="text" name="username">
+	<input class="textbox" placeholder="Username" type="text" name="username">
 <br>
-	<label for="password" >Password:</label>
-	<input type="password" name="password">
+	<input class="textbox" placeholder="Password" type="password" name="password">
 <br>
-	<input type="submit" value="Register Account" name="register">
-	<input type="submit" value="Cancel" name="cancel">
+	<input class="button" type="submit" value="Register" name="register">
+	<input class="button" type="submit" value="Cancel" name="cancel">
 </form>
+</div></div>
+</body>
 </html>

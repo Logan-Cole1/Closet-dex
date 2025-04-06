@@ -15,13 +15,30 @@ if (!isset($_SESSION["username"])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Your Closet</title>
-    <link rel="stylesheet" href="../styles/style.css">
+	<title>Closet-Dex | Your Closet</title>
+	<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-    <p>This is your closet</p>
+	<div id="logout">
+		<?php echo htmlspecialchars($_SESSION["username"]); ?>
+		<a href="../logout.php">
+			<button class="small-button">Logout</button>
+		</a>
+	</div>
+
+	<div id="exit">
+		<button onclick="history.go(-1);" class="small-button">Exit Closet</button>
+	</div>
+
+	<h1 align="center">Your Closet</h1>
+	<div style="text-align:center;"><a href="addClothingItem.php">
+		<button>Add Items</button>
+	</a></div>
+
+	<div id="center-tall">
 
     <?php
     
@@ -33,7 +50,8 @@ if (!isset($_SESSION["username"])) {
          echo "<details>";
          echo "<summary>";
          echo $catName;
-         echo "</summary>";  
+         echo "</summary>";
+         echo "<div class='item-list'>";  
        
         $items = get_items_for_user($catName, $_SESSION["username"]); //Call items function to get the items in the category
 
@@ -41,31 +59,21 @@ if (!isset($_SESSION["username"])) {
         foreach ($items as $item) {
             $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findImage($item["username"] . "_" . $item["cName"]));
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
-            echo "<br>";
-            echo "<p>" . htmlspecialchars($item["cName"]) . "</p>";
-            echo "<br>";
-            echo "<p>" . htmlspecialchars($item["category"]) . "</p>";
+            echo "<br>" . htmlspecialchars($item["cName"]);
+            echo "<br><br>";
         }
 
         //If There are no items in the category, show message
         if ($items == NULL) {
-        echo "<p> No items in this category!</p>";
+        echo "No items in this category!";
         }
         
+	echo "</div>";
         echo "</details>";
     }
     ?>
-    <form action="addClothingItem.php" method="post">
-        <p align="left">
-            <input type="submit" value="additems" name="additems">
-        </p>
-    </form>
 
-    <form action="../logout.php" method="post">
-        <input type="submit" value="logout" name="logout">
-    </form>
-	
-	<button onclick="history.go(-1);">Back</button>
+</div>
 
 </body>
 </html>

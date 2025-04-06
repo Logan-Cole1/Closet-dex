@@ -9,6 +9,49 @@ function connectDB() {
 }
 
 
+
+// Process outfit creation upon final submission
+function processOutfitCreation($username, $postData, $fileData) {
+    try {
+        $dbh = connectDB();
+        $outfitName = $postData["outfitName"];
+
+        $dbh->beginTransaction();
+
+        // Create outfit
+        if (!createOutfit($username, $outfitName)) {
+            throw new Exception("Error creating outfit.");
+        }
+
+        // Upload outfit image
+        $fileExtension = pathinfo($fileData["outfitImage"]["name"], PATHINFO_EXTENSION);
+        $newFilePath = __DIR__ . "/../ClothingImages/" . "OUTFIT_" . $username . "_" . $outfitName . "." . $fileExtension;
+        if (!move_uploaded_file($fileData["outfitImage"]["tmp_name"], $newFilePath)) {
+            throw new Exception("Failed to upload outfit image.");
+        }
+
+        // Add selected items to the outfit
+        global $categories; // Ensure $categories is accessible
+        foreach ($categories as $category) {
+            $itemName = $postData[$category];
+            if (!empty($itemName)) {
+                if (!addOutfitItem($username, $outfitName, $itemName, $category)) {
+                    throw new Exception("Error adding item $itemName to outfit.");
+                }
+            }
+        }
+
+        $dbh->commit();
+        return "Outfit added successfully!";
+    } catch (Exception $e) {
+        $dbh->rollBack();
+        return $e->getMessage();
+    } finally {
+        $dbh = null;
+    }
+}
+
+
 //return number of rows matching the given user and passwd.
 function authenticate_customer($user, $passwd) {
     try {

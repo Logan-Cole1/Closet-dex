@@ -2,6 +2,11 @@
 	font-family: monospace;
 }
 
+body {
+	/*background-color: #7f9a8f; OLD COLOR*/
+	background-color: #aec1b8;
+}
+
 a {
 	text-decoration: none;
 }
@@ -10,15 +15,23 @@ h1 {
 	font-size: 40px;
 }
 
+img {
+	border: 5px solid lightgray;
+	border-radius: 10px;
+}
+
 #center-box {
 	margin: 10vh auto;
-	/*background-color: red;*/
-	width: 50vw;
+	width: 33vw;
 	text-align: center;
+	padding-top: 2vw;
+	padding-bottom: 5vw;
+	border-radius: 100px;
 }
 
 #login-page-logo {
 	width: 200px;
+	border: none;
 }
 
 #logout {
@@ -27,29 +40,36 @@ h1 {
 	right: 5px;
 }
 
-button {
-	all: unset; /* Reset all default styles */
+#exit {
+	position: fixed;
+	top: 5px;
+	left: 5px;
 }
 
-#logout form .button {
-	/* Ensure styles are applied correctly */
-	display: inline-block;
-	color: #696969;
-	border: 3px solid darkgray;
-	border-radius: 15px;
-	padding: 3px 6px;
-	background-color: white;
+button {
+	font-size: 12pt;
+	color: #333333;
+	border: 3px solid #d5d5d5;
+	border-radius: 20px;
+	padding: 5px 8px;
+	background-color: #ebebeb;
 	transition: color 0.5s, border-color 0.5s;
 }
 
-#logout form .button:hover {
-	cursor: pointer;
-	color: black;
-	border-color: black;
+.small-button {
+	font-size: 10pt;
+	border-radius: 15px;
+	padding: 3px 6px;
 }
 
-#logout form .button:active {
-	border-color: #61c8ff;
+button:hover {
+	cursor: pointer;
+	border-color: white;
+}
+
+button:active {
+	border-color: white;
+	background-color: white;
 	transition: none;
 }
 
@@ -73,6 +93,8 @@ button {
 	border: none;
 	border-bottom: 3px solid darkgray;
 	transition: border 0.5s;
+	background-color: transparent;
+	color: black;
 }
 
 #login-box .textbox::placeholder {
@@ -80,35 +102,57 @@ button {
 }
 
 #login-box .textbox:hover {
-	border-bottom-color: black;
+	border-bottom-color: white;
 }
 
 #login-box .textbox:focus {
 	outline: none;
-	border-bottom-color: #61c8ff;
-}
-
-#login-box .textbox:focus::placeholder {
-	color: white;
+	border-bottom-color: white;
 }
 
 #login-box .button {
 	margin: 20px 10px;
-	color: #696969;
-	border: 3px solid darkgray;
+	color: #333333;
+	border: 3px solid #d5d5d5;
 	border-radius: 20px;
 	padding: 5px 12px;
-	background-color: white;
+	background-color: #ebebeb;
 	transition: color 0.5s, border-color 0.5s;
 }
 
 #login-box .button:hover {
 	cursor: pointer;
-	color: black;
-	border-color: black;
+	border-color: white;
 }
 
 #login-box .button:active {
-	border-color: #61c8ff;
+	border-color: white;
+	background-color: white;
 	transition: none;
+}
+
+/* CLOSET/WARDROBE */
+
+#center-tall {
+	width: 50vw;
+	margin: auto;
+}
+
+summary {
+	font-size: 16pt;
+}
+
+summary:hover {
+	cursor: pointer;
+}
+
+.item-list {
+	font-size: 16pt;
+	border-left: 3px dotted black;
+	margin-left: 6px;
+	padding: 20px;
+}
+
+.item-list img {
+	margin: 10px 0;
 }

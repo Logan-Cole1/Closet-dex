@@ -4,92 +4,87 @@
  * Users can input an outfit name, upload an image, and add items to the outfit. 
  * The outfit is then added to the database.
  */
+
 require_once __DIR__ . "/../config.php";
 require_once __DIR__ . "/../db.php";
 
 if (!isset($_SESSION["username"])) {
-	header("LOACTION:../index.php");
+    header("LOCATION:../index.php");
     exit;
 }
 
-if (isset($_POST["addOutfit"])) {
-    $outfitName = $_POST["outfitName"];
+// Define categories globally
+$categories = array("Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories");
 
-    if(!createOutfit($_SESSION["username"], $outfitName)) {
-        echo "Error creating outfit";
-    } else{
-        // Move oImage to the correct directory
-        $fileExtension = pathinfo($_FILES["outfitImage"]["name"], PATHINFO_EXTENSION);
-        $newFilePath = "../ClothingImages/" . "OUTFIT" ."_". $_SESSION["username"] . "_" . $_POST["outfitName"] . "." . $fileExtension;
-        if (!move_uploaded_file($_FILES["outfitImage"]["tmp_name"], $newFilePath)) { // Use move_uploaded_file()
-            return false;  
+// Image previews handling logic
+$imagePreviews = array();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    foreach ($categories as $category) {
+        if (!empty($_POST[$category])) {
+            $itemName = $_POST[$category];
+            $itemImage = findImage($_SESSION["username"] . "_" . $itemName);
+            $imagePreviews[$category] = $itemImage ? "../ClothingImages/$itemImage" : "../ClothingImages/default.jpg";
+        } else {
+            $imagePreviews[$category] = "../ClothingImages/default.jpg";
         }
-        $categorys = array("Headwear", 
-                            "Top", 
-                            "Outerwear",
-                            "Bottom",
-                            "Footwear", 
-                            "Dress",
-                            "Accessories");
-        foreach ($categorys as $category) {
-            $cName = $_POST[$category];
-            if ($cName != "") {
-                if(!addOutfitItem($_SESSION["username"], $outfitName, $cName, $category)){
-                    echo "Error adding item " . $cName . " to outfit: Item of worng category.";
-                }
-            }
-        }
-        echo "Outfit added successfully";
     }
-    
+}
+
+// Handle final submission
+$returnMsg = "";
+if (isset($_POST["addOutfit"])) {
+    $returnMsg = processOutfitCreation($_SESSION["username"], $_POST, $_FILES);
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-<p>Create an outfit</p>
+<head>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <p>Create an outfit:</p>
 
-<form action="addOutfit.php" method="post" enctype="multipart/form-data">
-    <label for="outfitName">Outfit Name:</label>
-    <input type="text" id="outfitName" name="outfitName">
-    <br>
+    <form action="addOutfit.php" method="post" enctype="multipart/form-data">
+        <label for="outfitName">Outfit Name:</label>
+        <input type="text" id="outfitName" name="outfitName" required>
+        <br>
 
-    <label for="outfitImage">Image:</label>
-    <input type="file" id="outfitImage" name="outfitImage" accept="image/*">
-    <br>
+        <label for="outfitImage">Image:</label>
+        <input type="file" id="outfitImage" name="outfitImage" accept="image/*" required>
+        <br>
 
-    <label for="Headwear">Headwear:</label>
-    <input type="text" id="Headwear" name="Headwear">
-    <br>
+        <?php
+        // Dynamically render dropdown menus for clothing items
+        foreach ($categories as $category) {
+            echo "<label for='$category'>$category:</label><br>";
+            echo "<select id='$category' name='$category' onchange='this.form.submit()'>";
+            echo "<option value=''>None</option>"; // Default option
 
-    <label for="Top">Top:</label>
-    <input type="text" id="Top" name="Top">
-    <br>
+            $items = get_items_for_user($category, $_SESSION["username"]);
+            foreach ($items as $item) {
+                $itemName = htmlentities($item["cName"]);
+                $selected = (!empty($_POST[$category]) && $_POST[$category] === $itemName) ? "selected" : "";
+                echo "<option value='$itemName' $selected>$itemName</option>";
+            }
+            echo "</select>";
 
-    <label for="Outerwear">Outerwear:</label>
-    <input type="text" id="Outerwear" name="Outerwear">
-    <br>
+            // Image preview for the dropdown selection
+            $imagePath = $imagePreviews[$category] ?? "../ClothingImages/default.jpg";
+            echo "<img src='$imagePath' alt='$category Preview' style='width:100px;height:100px;'><br><br>";
+        }
+        ?>
 
-    <label for="Bottom">Bottom:</label>
-    <input type="text" id="Bottom" name="Bottom">
-    <br>
-
-    <label for="Footwear">Footwear:</label>
-    <input type="text" id="Footwear" name="Footwear">
-    <br>
-
-    <label for="Dress">Dress:</label>
-    <input type="text" id="Dress" name="Dress">
-    <br>
-
-    <label for="Accessory">Accessory:</label>
-    <input type="text" id="Accessory" name="Accessory">
-    <br>
-
-
-    <input type="submit" value="Add Outfit" name="addOutfit">
-    <br>
-</form>
+        <input type="submit" value="Add Outfit" name="addOutfit">
+        <br>
+    </form>
     <button onclick="history.go(-1);">Cancel</button>
 
+    <?php
+    // Display success or error message after submission
+    if (!empty($returnMsg)) {
+        echo "<p>$returnMsg</p>";
+    }
+    ?>
+</body>
 </html>

@@ -18,19 +18,32 @@ if (isset($_POST["addToCategory"])){
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
-<head>Welcome to the outfits page! (>^w^<)</head>
-</br>
-<button onclick="history.go(-1);">Back</button>
+<head>
+	<title>Closet-Dex | Your Wardrobe</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
 
 <body>
 
-    <form action="addOutfit.php" method="post">
-        <p align="left">
-            <input type="submit" value="addOutfitPage" name="addOutfitPage">
-        </p>
-    </form>
+	<div id="logout">
+		<?php echo htmlspecialchars($_SESSION["username"]); ?>
+		<a href="../logout.php">
+			<button class="small-button">Logout</button>
+		</a>
+	</div>
+
+	<div id="exit">
+		<button onclick="history.go(-1);" class="small-button">Exit Wardrobe</button>
+	</div>
+
+	<h1 align="center">Your Wardrobe (>^w^<)</h1>
+	<div style="text-align:center;"><a href="addOutfit.php">
+		<button>Add Outfit</button>
+	</a></div>
+
+	<div id="center-tall">
 
     <?php
     if (isset($_POST["categoryCreate"])) {
@@ -80,9 +93,6 @@ if (isset($_POST["addToCategory"])){
     foreach($outfits as $outfit) {
         $outfitItems = get_outfit_items($outfit["oName"], $_SESSION["username"]);
 
-        echo "<details>";
-        echo "<summary>";
-        echo $outfit["oName"] ."<br>";
         $outfitImage = findImage("OUTFIT_".$outfit["username"] . "_" . $outfit["oName"]);
         $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . $outfitImage);
         echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($outfit["oName"]) . "' style='width:200px;height:200px;'>";
@@ -105,20 +115,24 @@ if (isset($_POST["addToCategory"])){
             <input type="submit" name="addToCategory" value="Add to Category">
         </form>
         <?php
+        echo "<details>";
+        echo "<summary>";
+        echo $outfit["oName"];
         echo "</summary>";
+	echo "<div class='item-list'>";
 
         foreach ($outfitItems as $outfitItem) {
             $clothingItem = get_clothing_item($outfitItem["cName"], $outfitItem["username"]);
             $fileWithExtension = str_replace(" ", "%20","../ClothingImages/" . findImage($outfitItem["username"] . "_" . $outfitItem["cName"]));
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($clothingItem["cName"]) . "' style='width:200px;height:200px;'>";
             echo "<br>";
-            echo "<p>" . htmlspecialchars($clothingItem["cName"]) . "</p>";
-            echo "<br>";
-            echo "<p>" . htmlspecialchars($clothingItem["category"]) . "</p>";
+            echo htmlspecialchars($clothingItem["cName"]) . " (" . htmlspecialchars($clothingItem["category"]) . ")<br><br>";
         }
-        echo "</details>";
+	echo "</div>";
+        echo "</details><br><br><br>";
 
     }
     ?>
+</div>
 </body>
 </html>
