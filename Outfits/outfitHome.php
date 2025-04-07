@@ -38,7 +38,7 @@ if (isset($_POST["addToCategory"])){
 		<button onclick="history.go(-1);" class="small-button">Exit Wardrobe</button>
 	</div>
 
-	<h1 align="center">Your Wardrobe (>^w^<)</h1>
+	<h1 align="center">Your Wardrobe</h1>
 	<div style="text-align:center;"><a href="addOutfit.php">
 		<button>Add Outfit</button>
 	</a></div>
@@ -84,9 +84,10 @@ if (isset($_POST["addToCategory"])){
     foreach ($oCategories as $row) {
 
         echo "<details>";
-        echo "<summary>";
+        echo "<summary class='outfit-summary'>";
         echo $row["category"];
         echo "</summary>";
+	echo "<div class='outfit-list'>";
 
         $outfits = get_outfits_for_user($_SESSION["username"], $row["category"]); // Call outfits function
         $categoryNames = ["Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories"];
@@ -140,6 +141,7 @@ if (isset($_POST["addToCategory"])){
             echo "</details><br><br><br>";
 
         }
+	echo "</div>";
         echo "</details>";
     }
     ?>

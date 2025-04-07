@@ -46,7 +46,7 @@ img {
 	left: 5px;
 }
 
-button {
+button, input[type=submit], select {
 	font-size: 12pt;
 	color: #333333;
 	border: 3px solid #d5d5d5;
@@ -56,18 +56,22 @@ button {
 	transition: color 0.5s, border-color 0.5s;
 }
 
+select:focus {
+	outline: none;
+}
+
 .small-button {
 	font-size: 10pt;
 	border-radius: 15px;
 	padding: 3px 6px;
 }
 
-button:hover {
+button:hover, input[type=submit]:hover, select:hover {
 	cursor: pointer;
 	border-color: white;
 }
 
-button:active {
+button:active, input[type=submit]:active, select:active {
 	border-color: white;
 	background-color: white;
 	transition: none;
@@ -142,6 +146,10 @@ summary {
 	font-size: 16pt;
 }
 
+.outfit-summary {
+	font-weight: bold;
+}
+
 summary:hover {
 	cursor: pointer;
 }
@@ -154,5 +162,16 @@ summary:hover {
 }
 
 .item-list img {
+	margin: 10px 0;
+}
+
+.outfit-list {
+	font-size: 16pt;
+	border-left: 3px solid black;
+	margin-left: 6px;
+	padding: 20px;
+}
+
+.outfit-list img {
 	margin: 10px 0;
 }
