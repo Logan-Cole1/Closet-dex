@@ -141,6 +141,22 @@ function get_outfits_for_user($username, $category) {
     }
 }
 
+function get_uncategorized_outfits($username) {
+    try {
+        $dbh = connectDB();
+        $statement = $dbh->prepare("SELECT * FROM clo_outfits where username = :username and category is null");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $dbh=null;
+        return $results;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
+
 function get_outfit_items($outfitName, $username) {
     try {
         $dbh = connectDB();
