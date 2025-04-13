@@ -5,7 +5,7 @@
  * If the user already exists, an error message is displayed.
  */
 
- require_once __DIR__ . "/db.php";
+require_once __DIR__ . "/db.php";
 
 if (isset($_POST["register"])) {
 	$check = register_user($_POST['username'], $_POST['password']);
@@ -17,12 +17,6 @@ if (isset($_POST["register"])) {
 		exit;
 	}
 }
-
-if (isset($_POST["cancel"])) {
-	header("LOCATION:index.php");
-	exit;
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -34,20 +28,18 @@ if (isset($_POST["cancel"])) {
 </head>
 
 <body>
-
-
-<div id="center-box">
-<img id="login-page-logo" src="logo.png">
-<div id="login-box">
-
-<form action="registration.php" method="post">
-	<input class="textbox" placeholder="Username" type="text" name="username">
-<br>
-	<input class="textbox" placeholder="Password" type="password" name="password">
-<br>
-	<input class="button" type="submit" value="Register" name="register">
-	<input class="button" type="submit" value="Cancel" name="cancel">
-</form>
-</div></div>
+	<div id="center-box">
+		<img id="login-page-logo" src="logo.png">
+		<div id="login-box">
+			<form action="registration.php" method="post">
+				<input class="textbox" placeholder="Username" type="text" name="username" required>
+				<br>
+				<input class="textbox" placeholder="Password" type="password" name="password" required>
+				<br>
+				<input class="button" type="submit" value="Register" name="register">
+			</form>
+			<a href="index.php"><button class="button">Cancel</button></a>
+		</div>
+	</div>
 </body>
 </html>
