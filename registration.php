@@ -56,17 +56,12 @@
 require_once __DIR__ . "/db.php";
 
 // Handle form submission
+//checks to see if the form was submitted via post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	//set $password to be what was entered in the password field
     $password = $_POST['password'];
+	//set the $password_confirmation to be what was entered in the password confirmation field
     $password_confirmation = $_POST['password_confirmation'];
-
-    // Validate password
-    $password_errors = validate_password($password);
-
-    // Check if password and confirmation match
-    if ($password !== $password_confirmation) {
-        $password_errors[] = "Passwords do not match.";
-    }
 }
 
 $errors = [];
