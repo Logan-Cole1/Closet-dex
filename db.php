@@ -204,30 +204,6 @@ function change_password($user, $password) {
     }
 }
 
-
-/*function register_user($username, $password) {
-    try {
-        $dbh = connectDB();
-        // check if username already exists in db
-        $check = $dbh->prepare("SELECT COUNT(username) FROM clo_user where username = :username");
-        $check->bindParam(":username", $username);
-        $check->execute();
-        $row=$check->fetch();
-        if ($row[0] != 0) {
-            $dbh = null;
-            return false;
-        }
-        $statement = $dbh->prepare("INSERT INTO clo_user (username, password) values (:username, sha2(:password, 256))");
-        $statement->bindParam(":username", $username);
-        $statement->bindParam(":password", $password);
-        $statement->execute();
-        $dbh=null;
-        return true;
-    } catch (PDOException $e) {
-        print "Error!" . $e->getMessage() . "<br/>";
-        die();
-    }
-}*/
 function user_exists($username) {
     try {
         $dbh = connectDB();
@@ -257,8 +233,6 @@ function create_user($username, $password) {
         die();
     }
 }
-
-
 
 function create_category($username, $category){
     try {
@@ -465,27 +439,6 @@ function validate_password($password) {
 
     // Return the array of errors (empty if no issues)
     return $errors;
-}
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $password = $_POST['password'];
-    $password_confirmation = $_POST['password_confirmation'];
-
-    // Validate password
-    $password_errors = validate_password($password);
-
-    // Check if password and confirmation match
-    if ($password !== $password_confirmation) {
-        $password_errors[] = "Passwords do not match.";
-    }
-
-    // If there are validation errors, display them
-    /*if (!empty($password_errors)) {
-        foreach ($password_errors as $error) {
-            echo "<p style='color: red;'>$error</p>";
-        }
-    }*/
 }
 
 ?>

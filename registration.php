@@ -1,3 +1,10 @@
+<!-- registration.php
+ * This file is the registration page of the application.
+ * It allows users to create a new account by entering a username and password.
+ * If the user already exists, an error message is displayed.
+ -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,13 +53,21 @@
 
 <?php 
 
-/* registration.php
- * This file is the registration page of the application.
- * It allows users to create a new account by entering a username and password.
- * If the user already exists, an error message is displayed.
- */
-
 require_once __DIR__ . "/db.php";
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $password = $_POST['password'];
+    $password_confirmation = $_POST['password_confirmation'];
+
+    // Validate password
+    $password_errors = validate_password($password);
+
+    // Check if password and confirmation match
+    if ($password !== $password_confirmation) {
+        $password_errors[] = "Passwords do not match.";
+    }
+}
 
 $errors = [];
 $errorPass = [];
