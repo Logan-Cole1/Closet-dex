@@ -29,6 +29,11 @@ img {
 	border-radius: 100px;
 }
 
+#center-title{
+	margin: 10vh auto;
+	text-align: center
+}
+
 #login-page-logo {
 	width: 200px;
 	border: none;

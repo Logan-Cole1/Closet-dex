@@ -205,7 +205,7 @@ function change_password($user, $password) {
 }
 
 
-function register_user($username, $password) {
+/*function register_user($username, $password) {
     try {
         $dbh = connectDB();
         // check if username already exists in db
@@ -227,7 +227,38 @@ function register_user($username, $password) {
         print "Error!" . $e->getMessage() . "<br/>";
         die();
     }
+}*/
+function user_exists($username) {
+    try {
+        $dbh = connectDB();
+        $stmt = $dbh->prepare("SELECT COUNT(*) FROM clo_user WHERE username = :username");
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        $dbh = null;
+        return $count > 0;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
 }
+
+function create_user($username, $password) {
+    try {
+        $dbh = connectDB();
+        $stmt = $dbh->prepare("INSERT INTO clo_user (username, password) VALUES (:username, sha2(:password, 256))");
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":password", $password);
+        $stmt->execute();
+        $dbh = null;
+        return true;
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
+
 
 function create_category($username, $category){
     try {
@@ -401,4 +432,60 @@ function addOutfitItem($username, $oName, $cName, $category) {
         die();
     }
 }
+
+//Function to validate password
+//pregmatch: check if a string matches a regular expression 
+function validate_password($password) {
+    $errors = [];
+
+    // Check length
+    if (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters.";
+    }
+
+    // Check for uppercase letter
+    if (!preg_match('/[A-Z]/', $password)) {
+        $errors[] = "Password must contain at least one uppercase letter.";
+    }
+
+    // Check for lowercase letter
+    if (!preg_match('/[a-z]/', $password)) {
+        $errors[] = "Password must contain at least one lowercase letter.";
+    }
+
+    // Check for number
+    if (!preg_match('/\d/', $password)) {
+        $errors[] = "Password must contain at least one number.";
+    }
+
+    // Check for special character
+    if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        $errors[] = "Password must contain at least one special character.";
+    }
+
+    // Return the array of errors (empty if no issues)
+    return $errors;
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $password = $_POST['password'];
+    $password_confirmation = $_POST['password_confirmation'];
+
+    // Validate password
+    $password_errors = validate_password($password);
+
+    // Check if password and confirmation match
+    if ($password !== $password_confirmation) {
+        $password_errors[] = "Passwords do not match.";
+    }
+
+    // If there are validation errors, display them
+    /*if (!empty($password_errors)) {
+        foreach ($password_errors as $error) {
+            echo "<p style='color: red;'>$error</p>";
+        }
+    }*/
+}
+
 ?>
