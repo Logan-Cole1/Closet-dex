@@ -16,6 +16,14 @@ if (isset($_POST["addToCategory"])){
     addOutfitToCategory($_SESSION["username"], $_POST["outfitName"], $_POST["categoryName"]);
     echo "<p style='color:green;'>Outfit added to category successfully!</p>";
 }
+if (isset($_POST["randOutfit"])){
+    $check = createRandOutfit($_SESSION["username"], $_POST["oName"]);
+    if ($check == true) {   
+        echo "<p style='color:green;'>Outfit created successfully!</p>";
+    } else {
+        echo "<p style='color:red;'>Failed to create outfit.</p>";
+    }
+}
 ?>
 
 <!DOCTYPE html> 
@@ -44,6 +52,12 @@ if (isset($_POST["addToCategory"])){
 	</a></div>
 
 	<div id="center-tall">
+
+        <form action='outfitHome.php' method='post'>
+            <input type="text" name="oName" placeholder="Outfit Name" required>
+            <br>
+            <input type='submit' value='Generate Random Outfit' name='randOutfit'>
+        </form>
 
     <?php
     if (isset($_POST["categoryCreate"])) {

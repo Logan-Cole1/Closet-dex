@@ -407,6 +407,45 @@ function addOutfitItem($username, $oName, $cName, $category) {
     }
 }
 
+function createRandOutfit($username, $oName){
+    try {
+        $dbh = connectDB();
+        $dbh->beginTransaction();
+
+        createOutfit($username, $oName);
+
+        // Add one random item from each category to the outfit
+        $categoryNames = ["Headwear", "Top", "Outerwear", "Bottom", "Footwear", "Dress", "Accessories"];
+        $itemAdded = false;
+        foreach ($categoryNames as $categoryName) {
+            $temp = get_items_for_user($categoryName, $username);
+
+            if (sizeof($temp) == 0) {
+                continue; // Skip if no items in this category
+            }
+            
+            $item = $temp[array_rand($temp)];
+            // Add the item to the outfit
+            addOutfitItem($username, $oName, $item["cName"], $categoryName);
+            $itemAdded = true;
+        }
+
+        if (!$itemAdded) {
+            $dbh->rollBack(); // Rollback if no items were added
+            $dbh = null;
+            return false;
+        }
+
+        $dbh->commit();
+        $dbh = null;
+        return true;
+
+    } catch (PDOException $e) {
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
 //Function to validate password
 //pregmatch: check if a string matches a regular expression 
 function validate_password($password) {
