@@ -11,6 +11,7 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <title>Closet-Dex | Register Account</title>
+    <link rel="icon" type="image/png" href="logo-icon.png">
 </head>
 
 <body>
