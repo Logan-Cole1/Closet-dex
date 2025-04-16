@@ -14,13 +14,8 @@
 </head>
 
 <body>
-    <h1>
-        <div id="center-title">
-            Registration Page
-        </div>
-    </h1>
-
     <div id="center-box">
+	<h1>Register Account</h1>
         <div id="login-box">
             <form action="registration.php" method="post">
                 <?php
@@ -43,7 +38,7 @@
                 <br>
                 <input class="button" type="submit" value="Register" name="register">
             </form>
-            <a href="index.php"><button class="button">Cancel</button></a>
+	    <a href="index.php"><button class="button">Cancel</button></a>
         </div>
     </div>
 </body>

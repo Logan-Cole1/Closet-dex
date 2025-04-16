@@ -20,6 +20,10 @@ img {
 	border-radius: 10px;
 }
 
+form {
+	display: inline;
+}
+
 #center-box {
 	margin: 10vh auto;
 	width: 33vw;
@@ -27,11 +31,6 @@ img {
 	padding-top: 2vw;
 	padding-bottom: 5vw;
 	border-radius: 100px;
-}
-
-#center-title{
-	margin: 10vh auto;
-	text-align: center
 }
 
 #login-page-logo {
