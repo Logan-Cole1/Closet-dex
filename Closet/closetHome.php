@@ -30,7 +30,7 @@ if (!isset($_SESSION["username"])) {
 	</div>
 
 	<div id="exit">
-		<button onclick="history.go(-1);" class="small-button">Exit Closet</button>
+		<a href="../main.php" class="small-button">Exit Closet</a>
 	</div>
 
 	<h1 align="center">Your Closet</h1>

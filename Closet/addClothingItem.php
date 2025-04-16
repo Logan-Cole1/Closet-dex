@@ -86,7 +86,7 @@ if (!isset($_SESSION["username"])) {
         <input type="submit" value="Add Item" name="addItem">
         <br>
     </form>
-	<button onclick="history.go(-1);">Cancel</button>
+		<a href="closetHome.php" class="small-button">Cancel</a>
     <?php
 
     if ($returnMsg != "") {

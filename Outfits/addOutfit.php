@@ -78,7 +78,7 @@ if (isset($_POST["addOutfit"])) {
         <input type="submit" value="Add Outfit" name="addOutfit">
         <br>
     </form>
-    <button onclick="history.go(-1);">Cancel</button>
+	<a href="outfitHome.php" class="small-button">Cancel</a>
 
     <?php
     // Display success or error message after submission
