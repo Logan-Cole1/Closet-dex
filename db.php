@@ -480,4 +480,34 @@ function validate_password($password) {
     return $errors;
 }
 
+//Function that deletes a clothing item when button is pressed in closet home
+function delete_clothing_item($username, $itemName) 
+{
+    try 
+	{
+        $dbh = connectDB();
+
+        //Delete from outfit items
+        $stmt1 = $dbh->prepare("DELETE FROM clo_outfit_items WHERE username = :username AND cName = :cName");
+        $stmt1->bindParam(":username", $username);
+        $stmt1->bindParam(":cName", $itemName);
+        $stmt1->execute();
+
+        //Delete from clothing items
+        $stmt2 = $dbh->prepare("DELETE FROM clo_clothing_items WHERE username = :username AND cName = :cName");
+        $stmt2->bindParam(":username", $username);
+        $stmt2->bindParam(":cName", $itemName);
+        $stmt2->execute();
+
+        $dbh = null;
+        return true;
+		
+    } 
+	catch (PDOException $e) 
+	{
+        print "Error!" . $e->getMessage() . "<br/>";
+        die();
+    }
+}
+
 ?>

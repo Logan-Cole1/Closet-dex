@@ -11,6 +11,19 @@ if (!isset($_SESSION["username"])) {
     header("LOCATION:../index.php");
     exit; // Important: Stop further execution after redirect
 }
+
+//Handle delete button being pressed
+if (isset($_POST["deleteItem"])) {
+    $itemName = $_POST["deleteItem"];
+    $success = delete_clothing_item($_SESSION["username"], $itemName);
+   if ($success) 
+   {
+        $message = "<p style='color:green;'>Clothing Item Deleted!</p>";
+    } else 
+	{
+        $message = "<p style='color:red;'>Failed to delete clothing!</p>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +75,13 @@ if (!isset($_SESSION["username"])) {
             echo "<img src=". $fileWithExtension." alt='" . htmlspecialchars($item["cName"]) . "' style='width:200px;height:200px;'>";
             echo "<br>" . htmlspecialchars($item["cName"]);
             echo "<br><br>";
-        }
+			
+			//Delete item functionality
+			echo "<form method='post' action='closetHome.php' style='display:inline-block; margin-top:5px;'>";
+			echo "<input type='hidden' name='deleteItem' value='" . htmlspecialchars($item["cName"]) . "'>";
+			echo "<input type='submit' value='Delete' class='small-button' onclick='return confirm(\"Are you sure you want to delete this item?\");'>";
+			echo "</form>";
+		}
 
         //If There are no items in the category, show message
         if ($items == NULL) {
@@ -75,6 +94,10 @@ if (!isset($_SESSION["username"])) {
     ?>
 
 </div>
-
+<?php 
+    if (!empty($message)) {
+        echo "<div style='text-align:center; margin-top:20px;'>$message</div>";
+    }
+?>
 </body>
 </html>
