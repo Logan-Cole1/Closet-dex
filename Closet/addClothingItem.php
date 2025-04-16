@@ -18,6 +18,7 @@ if (!isset($_SESSION["username"])) {
 
 <head>
 	<link rel="stylesheet" href="../style.css">
+	<title>Closet-Dex | Add Item</title>
 </head>
 
 <body>

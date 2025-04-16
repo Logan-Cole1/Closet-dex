@@ -17,7 +17,8 @@ if (!isset($_SESSION["username"])) {
 <html>
 <head>
 	<link rel="stylesheet" href="style.css">
-	<title>Main Page</title>
+	<link rel="icon" type="image/png" href="logo-icon.png">
+	<title>Closet-Dex | Home</title>
 </head>
 
 <body>
