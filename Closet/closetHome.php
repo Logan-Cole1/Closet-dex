@@ -30,7 +30,7 @@ if (isset($_POST["deleteItem"])) {
 <html>
 
 <head>
-	<title>Closet-Dex | Your Closet</title>
+	<title>Closet-Dex | Closet</title>
 	<link rel="stylesheet" href="../style.css">
 	<link rel="icon" type="image/png" href="../logo-icon.png">
 </head>
