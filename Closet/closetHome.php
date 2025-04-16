@@ -19,6 +19,7 @@ if (!isset($_SESSION["username"])) {
 <head>
 	<title>Closet-Dex | Your Closet</title>
 	<link rel="stylesheet" href="../style.css">
+	<link rel="icon" type="image/png" href="../logo-icon.png">
 </head>
 
 <body>

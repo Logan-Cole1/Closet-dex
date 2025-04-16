@@ -18,6 +18,11 @@ if (!isset($_SESSION["username"])) {
 
 <head>
 	<link rel="stylesheet" href="../style.css">
+<<<<<<< HEAD
+=======
+	<title>Closet-Dex | Add Item</title>
+	<link rel="icon" type="image/png" href="../logo-icon.png">
+>>>>>>> 57ffde00fa7882d640fba3f48fe45ef0a7f235a9
 </head>
 
 <body>

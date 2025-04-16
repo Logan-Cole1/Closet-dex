@@ -41,6 +41,10 @@ if (isset($_POST["addOutfit"])) {
 <html>
 <head>
     <link rel="stylesheet" href="../style.css">
+<<<<<<< HEAD
+=======
+    <link rel="icon" type="image/png" href="../logo-icon.png">
+>>>>>>> 57ffde00fa7882d640fba3f48fe45ef0a7f235a9
 </head>
 <body>
     <p>Create an outfit:</p>
