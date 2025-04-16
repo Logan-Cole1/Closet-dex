@@ -40,9 +40,7 @@ if (isset($_POST["addOutfit"])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Closet-Dex | Add Outfit</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="icon" type="image/png" href="logo-icon.png">
 </head>
 <body>
     <p>Create an outfit:</p>

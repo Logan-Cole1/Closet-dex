@@ -17,7 +17,7 @@ if (!isset($_SESSION["username"])) {
 <html>
 
 <head>
-	<title>Closet-Dex | Closet</title>
+	<title>Closet-Dex | Your Closet</title>
 	<link rel="stylesheet" href="../style.css">
 </head>
 

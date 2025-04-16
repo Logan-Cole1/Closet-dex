@@ -30,7 +30,7 @@ if (isset($_POST["randOutfit"])){
 <!DOCTYPE html> 
 <html>
 <head>
-	<title>Closet-Dex | Wardrobe</title>
+	<title>Closet-Dex | Your Wardrobe</title>
 	<link rel="stylesheet" href="../style.css">
 </head>
 
