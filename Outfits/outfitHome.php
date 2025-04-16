@@ -15,6 +15,7 @@ if (!isset($_SESSION["username"])) {
 if (isset($_POST["addToCategory"])){
     addOutfitToCategory($_SESSION["username"], $_POST["outfitName"], $_POST["categoryName"]);
     echo "<p style='color:green;'>Outfit added to category successfully!</p>";
+
 }
 if (isset($_POST["randOutfit"])){
     $check = createRandOutfit($_SESSION["username"], $_POST["oName"]);
@@ -43,7 +44,7 @@ if (isset($_POST["randOutfit"])){
 	</div>
 
 	<div id="exit">
-		<button onclick="history.go(-1);" class="small-button">Exit Wardrobe</button>
+	<a href="../main.php" class="small-button">Exit Wardrobe</a>
 	</div>
 
 	<h1 align="center">Your Wardrobe</h1>
