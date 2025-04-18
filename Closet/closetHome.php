@@ -44,7 +44,9 @@ if (isset($_POST["deleteItem"])) {
 	</div>
 
 	<div id="exit">
-		<a href="../main.php" class="small-button">Exit Closet</a>
+		<a href="../main.php">
+			<button class="small-button">Exit Closet</button>
+		</a>
 	</div>
 
 	<h1 align="center">Your Closet</h1>

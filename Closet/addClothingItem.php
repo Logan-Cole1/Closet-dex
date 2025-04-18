@@ -88,7 +88,7 @@ if (!isset($_SESSION["username"])) {
         <input type="submit" value="Add Item" name="addItem">
         <br>
     </form>
-		<a href="closetHome.php" class="small-button">Cancel</a>
+		<a href="closetHome.php"><button class="small-button">Cancel</button></a>
     <?php
 
     if ($returnMsg != "") {

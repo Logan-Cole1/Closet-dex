@@ -45,7 +45,9 @@ if (isset($_POST["randOutfit"])){
 	</div>
 
 	<div id="exit">
-	<a href="../main.php" class="small-button">Exit Wardrobe</a>
+	<a href="../main.php">
+		<button class="small-button">Exit Wardrobe</button>
+	</a>
 	</div>
 
 	<h1 align="center">Your Wardrobe</h1>
@@ -56,8 +58,7 @@ if (isset($_POST["randOutfit"])){
 	<div id="center-tall">
 
         <form action='outfitHome.php' method='post'>
-            <input type="text" name="oName" placeholder="Outfit Name" required>
-            <br>
+            <input type="text" name="oName" placeholder="Outfit Name" class="textbox" required>
             <input type='submit' value='Generate Random Outfit' name='randOutfit'>
         </form>
 
@@ -65,9 +66,7 @@ if (isset($_POST["randOutfit"])){
     if (isset($_POST["categoryCreate"])) {
     ?>
         <form action="outfitHome.php" method="post">
-            <label for="categoryName">Category Name:</label>
-            <input type="text" id="categoryName" name="categoryName">
-            <br>
+            <input type="text" id="categoryName" placeholder="Category Name" class="textbox" name="categoryName">
             <input type="submit" value="Add Category" name="addCategory">
         </form>
     <?php

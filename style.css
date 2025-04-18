@@ -96,7 +96,7 @@ button:active, input[type=submit]:active, select:active {
 	font-size: 14pt;
 }
 
-#login-box .textbox {
+.textbox {
 	margin: 10px;
 	padding: 5px;
 	border: none;
@@ -106,15 +106,15 @@ button:active, input[type=submit]:active, select:active {
 	color: black;
 }
 
-#login-box .textbox::placeholder {
+.textbox::placeholder {
 	color: #696969;
 }
 
-#login-box .textbox:hover {
+.textbox:hover {
 	border-bottom-color: white;
 }
 
-#login-box .textbox:focus {
+.textbox:focus {
 	outline: none;
 	border-bottom-color: white;
 }

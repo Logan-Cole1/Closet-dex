@@ -80,7 +80,7 @@ if (isset($_POST["addOutfit"])) {
         <input type="submit" value="Add Outfit" name="addOutfit">
         <br>
     </form>
-	<a href="outfitHome.php" class="small-button">Cancel</a>
+	<a href="outfitHome.php"><button class="small-button">Cancel</button></a>
 
     <?php
     // Display success or error message after submission
