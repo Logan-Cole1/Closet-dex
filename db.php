@@ -25,7 +25,7 @@ function processOutfitCreation($username, $postData, $fileData) {
 
         // Upload outfit image
         $fileExtension = pathinfo($fileData["outfitImage"]["name"], PATHINFO_EXTENSION);
-        $newFilePath = __DIR__ . "/../ClothingImages/" . "OUTFIT_" . $username . "_" . $outfitName . "." . $fileExtension;
+        $newFilePath = __DIR__ . "/ClothingImages/" . "OUTFIT_" . $username . "_" . $outfitName . "." . $fileExtension;
         if (!move_uploaded_file($fileData["outfitImage"]["tmp_name"], $newFilePath)) {
             throw new Exception("Failed to upload outfit image.");
         }
