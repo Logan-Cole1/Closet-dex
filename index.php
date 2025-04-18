@@ -28,6 +28,7 @@ if (isset($_POST["register"])) {
 <head>
     <title>Closet-Dex | Login</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="logo-icon.png">
 </head>
 
 <body>
